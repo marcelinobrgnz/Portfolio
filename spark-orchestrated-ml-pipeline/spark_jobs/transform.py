@@ -16,7 +16,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from spark_jobs.helpers import (  # noqa: E402
     WINE_BOUNDS,
     WINE_TYPE_MAP,
-    build_s3_feature_path,
     normalize_wine_column,
 )
 

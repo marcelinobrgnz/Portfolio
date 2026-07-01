@@ -10,7 +10,7 @@ import pytest
 
 pytest.importorskip("pyspark")
 
-from spark_jobs.transform import create_spark, transform_wine
+from spark_jobs.transform import create_spark, transform_wine  # noqa: E402
 
 FIXTURES = Path(__file__).parent / "fixtures" / "wine"
 

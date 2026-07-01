@@ -18,6 +18,9 @@ S3_BUCKET = os.getenv("S3_BUCKET", "mlops-inference-platform-864981752170")
 RAW_TAXI = os.getenv("RAW_TAXI_PATH", str(PROJECT_ROOT / "data/raw/taxi"))
 FEATURE_TAXI = os.getenv("FEATURE_TAXI_PATH", str(PROJECT_ROOT / "data/features/taxi"))
 MIN_TAXI_ROWS = int(os.getenv("MIN_TAXI_ROWS", "100000"))
+SPARK_PACKAGES = (
+    "org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262"
+)
 
 
 def _ensure_taxi_raw() -> None:
@@ -68,7 +71,7 @@ with DAG(
       bash_command=(
           "spark-submit "
           f"--master {SPARK_MASTER} "
-          "--packages org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 "
+          f"--packages {SPARK_PACKAGES} "
           f"{PROJECT_ROOT}/spark_jobs/transform.py "
           f"--dataset taxi --input {RAW_TAXI} "
           f"--output {FEATURE_TAXI} "

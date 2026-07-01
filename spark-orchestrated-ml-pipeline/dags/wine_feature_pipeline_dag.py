@@ -19,6 +19,9 @@ P1_ROOT = os.getenv("P1_PROJECT_ROOT", "/opt/mlops-inference-platform")
 RAW_WINE = os.getenv("RAW_WINE_PATH", str(PROJECT_ROOT / "data/raw/wine"))
 FEATURE_WINE_LOCAL = os.getenv("FEATURE_WINE_PATH", str(PROJECT_ROOT / "data/features/wine"))
 MIN_WINE_ROWS = int(os.getenv("MIN_WINE_ROWS", "6000"))
+SPARK_PACKAGES = (
+    "org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262"
+)
 
 
 def _ensure_wine_raw() -> None:
@@ -100,7 +103,7 @@ with DAG(
       bash_command=(
           "spark-submit "
           f"--master {SPARK_MASTER} "
-          "--packages org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 "
+          f"--packages {SPARK_PACKAGES} "
           f"{PROJECT_ROOT}/spark_jobs/transform.py "
           f"--dataset wine --input {RAW_WINE} "
           f"--output {FEATURE_WINE_LOCAL} "
