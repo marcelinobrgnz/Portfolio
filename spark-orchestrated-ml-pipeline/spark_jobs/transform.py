@@ -42,7 +42,12 @@ def _rename_wine_columns(df: DataFrame) -> DataFrame:
 
 def transform_wine(spark: SparkSession, input_path: str, output_path: str) -> dict:
   """Clean UCI wine CSVs, engineer ratios, write partitioned Parquet."""
-  df = spark.read.option("header", True).option("sep", ";").option("inferSchema", True).csv(input_path)
+  df = (
+      spark.read.option("header", True)
+      .option("sep", ";")
+      .option("inferSchema", True)
+      .csv(input_path)
+  )
   df = _rename_wine_columns(df)
 
   if "wine_type" not in df.columns:
