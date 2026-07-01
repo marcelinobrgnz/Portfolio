@@ -1,0 +1,17 @@
+{
+  "project": "mlops-inference-platform",
+  "measured_at": "2026-07-01",
+  "environment": "local Windows, uvicorn single worker, 127.0.0.1:8000",
+  "benchmark_requests": 200,
+  "latency_ms_mean": 3.93,
+  "latency_ms_p50": 3.8,
+  "latency_ms_p95": 4.94,
+  "latency_ms_max": 10.17,
+  "throughput_rps": 254.5,
+  "training_samples": 6497,
+  "test_accuracy_approx": 0.66,
+  "f1_macro_approx": 0.37,
+  "aws_region": "eu-west-1",
+  "s3_bucket": "mlops-inference-platform-864981752170",
+  "monthly_aws_cost_estimate_usd": "<2"
+}

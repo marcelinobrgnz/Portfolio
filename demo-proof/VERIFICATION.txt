@@ -1,0 +1,12 @@
+Project 1 — pytest (7 passed)
+Project 2 — pytest (7 passed, 1 skipped — PySpark local needs Java)
+
+P1 benchmark (200 requests, local FastAPI):
+  p95 latency: 4.94 ms
+  throughput: 254.5 req/s
+
+S3 artifacts verified in eu-west-1:
+  models/wine_quality_model.pkl
+  models/model.joblib
+  data/wine_quality_combined.csv
+  drift-reports/*.html

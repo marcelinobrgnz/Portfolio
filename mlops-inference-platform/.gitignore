@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+.env
+
+# ML artifacts (regenerate via train)
+models/*.pkl
+models/*.json
+!models/.gitkeep
+mlflow.db
+mlruns/
+mlartifacts/
+
+# Data (download via scripts)
+data/*.csv
+data/*.parquet
+!data/.gitkeep
+
+# Reports
+reports/*.html
+reports/*.json
+!reports/.gitkeep
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/

@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wine-api-config
+  labels:
+    app: wine-quality-api
+data:
+  MODEL_PATH: /app/models/wine_quality_model.pkl
+  MODEL_METADATA_PATH: /app/models/model_metadata.json
+  MLFLOW_TRACKING_URI: http://mlflow:5000
+  AWS_DEFAULT_REGION: eu-west-1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wine-quality-api
+  labels:
+    app: wine-quality-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wine-quality-api
+  template:
+    metadata:
+      labels:
+        app: wine-quality-api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/marcelinobrgnz/portfolio-wine-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: wine-api-config
+          volumeMounts:
+            - name: model-volume
+              mountPath: /app/models
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: model-volume
+          hostPath:
+            path: /models
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wine-quality-api
+  labels:
+    app: wine-quality-api
+spec:
+  type: NodePort
+  selector:
+    app: wine-quality-api
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30080

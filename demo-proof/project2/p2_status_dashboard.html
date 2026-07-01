@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><title>Project 2 — Spark + Airflow Pipeline</title>
+<style>body{font-family:system-ui;max-width:900px;margin:40px auto;padding:20px;background:#0f172a;color:#e2e8f0}
+h1{color:#38bdf8}table{border-collapse:collapse;width:100%}td,th{border:1px solid #334155;padding:8px}th{background:#1e293b}
+.ok{color:#4ade80}.pending{color:#fbbf24}</style></head>
+<body>
+<h1>Project 2: Spark-Orchestrated ML Pipeline</h1>
+<p>Batch: raw → Airflow DAG → PySpark → Parquet (S3) → trigger P1 MLflow train</p>
+<h2>Status</h2>
+<table>
+<tr><th>Component</th><th>Status</th></tr>
+<tr><td>PySpark transform.py (wine + taxi)</td><td class="ok">✓ Built</td></tr>
+<tr><td>wine_feature_pipeline DAG (5 tasks)</td><td class="ok">✓ Built</td></tr>
+<tr><td>taxi_etl_pipeline DAG</td><td class="ok">✓ Built</td></tr>
+<tr><td>docker-compose (Airflow + Spark)</td><td class="ok">✓ Configured</td></tr>
+<tr><td>pytest</td><td class="ok">✓ 7 passed, 1 skipped</td></tr>
+<tr><td>P1 integration (trigger_p1_train.sh)</td><td class="ok">✓ Wired</td></tr>
+<tr><td>Live Airflow UI demo</td><td class="pending">⚠ Needs Docker Desktop</td></tr>
+</table>
+<h2>Engineering Metrics</h2>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Wine rows (Spark ETL)</td><td>~6,400+</td></tr>
+<tr><td>NYC Taxi raw trips</td><td>2,826,368</td></tr>
+<tr><td>Raw taxi Parquet size</td><td>~47 MB</td></tr>
+<tr><td>Airflow DAG tasks (wine)</td><td>5</td></tr>
+<tr><td>AWS region</td><td>eu-west-1</td></tr>
+<tr><td>Monthly cost (Option A)</td><td>$0 compute + &lt;$2 S3</td></tr>
+</table>
+<h2>DAG: wine_feature_pipeline</h2>
+<ol>
+<li>ingest_raw_wine</li>
+<li>spark_transform_wine</li>
+<li>validate_row_counts (min 6,000)</li>
+<li>sync_features_to_s3</li>
+<li>trigger_p1_retrain → P1 MLflow</li>
+</ol>
+</body></html>

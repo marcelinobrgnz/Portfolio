@@ -1,0 +1,9 @@
+# Root
+.DS_Store
+Thumbs.db
+*.pyc
+__pycache__/
+.venv/
+.env
+
+# Per-project ignores apply inside subfolders

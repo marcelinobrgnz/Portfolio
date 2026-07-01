@@ -1,0 +1,27 @@
+FROM apache/airflow:2.10.4-python3.11
+
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openjdk-17-jre-headless \
+    awscli \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV SPARK_VERSION=3.5.4
+ENV SPARK_HOME=/opt/spark
+
+RUN curl -fsSL "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop3.tgz" \
+    | tar -xz -C /opt \
+    && ln -s "/opt/spark-${SPARK_VERSION}-bin-hadoop3" "$SPARK_HOME" \
+    && chmod -R a+rX "$SPARK_HOME"
+
+ENV PATH="${SPARK_HOME}/bin:${PATH}"
+
+USER airflow
+COPY requirements-p1-trigger.txt /tmp/requirements-p1-trigger.txt
+RUN pip install --no-cache-dir \
+    -r /tmp/requirements-p1-trigger.txt \
+    apache-airflow-providers-apache-spark==4.11.2 \
+    pyspark==3.5.4 \
+    boto3==1.35.71
