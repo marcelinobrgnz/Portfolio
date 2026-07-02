@@ -1,0 +1,9 @@
+config.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.aws/
+lambda/deployment.zip
+eval/last_report.json

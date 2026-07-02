@@ -1,0 +1,30 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "BedrockRAG",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:Retrieve",
+        "bedrock:RetrieveAndGenerate",
+        "bedrock:InvokeModel",
+        "bedrock:ApplyGuardrail"
+      ],
+      "Resource": [
+        "arn:aws:bedrock:eu-west-1:864981752170:knowledge-base/JV4VOCHIGT",
+        "arn:aws:bedrock:eu-west-1::foundation-model/mistral.mistral-large-2402-v1:0",
+        "arn:aws:bedrock:eu-west-1:864981752170:guardrail/piv318ormzl8"
+      ]
+    },
+    {
+      "Sid": "Logs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:eu-west-1:864981752170:*"
+    }
+  ]
+}

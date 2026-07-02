@@ -1,0 +1,66 @@
+{
+  "name": "secureguard-rag-guardrail",
+  "description": "SecureGuard RAG safety filters: toxicity, PII, prompt attacks",
+  "blockedInputMessaging": "Your message was blocked by our safety policy. Please ask a work-related question without harmful content or personal data.",
+  "blockedOutputsMessaging": "The assistant response was blocked by our safety policy. Please try rephrasing your question.",
+  "contentPolicyConfig": {
+    "filtersConfig": [
+      {
+        "type": "HATE",
+        "inputStrength": "HIGH",
+        "outputStrength": "HIGH",
+        "inputAction": "BLOCK",
+        "outputAction": "BLOCK"
+      },
+      {
+        "type": "VIOLENCE",
+        "inputStrength": "HIGH",
+        "outputStrength": "HIGH",
+        "inputAction": "BLOCK",
+        "outputAction": "BLOCK"
+      },
+      {
+        "type": "SEXUAL",
+        "inputStrength": "HIGH",
+        "outputStrength": "HIGH",
+        "inputAction": "BLOCK",
+        "outputAction": "BLOCK"
+      },
+      {
+        "type": "INSULTS",
+        "inputStrength": "MEDIUM",
+        "outputStrength": "MEDIUM",
+        "inputAction": "BLOCK",
+        "outputAction": "BLOCK"
+      },
+      {
+        "type": "MISCONDUCT",
+        "inputStrength": "MEDIUM",
+        "outputStrength": "MEDIUM",
+        "inputAction": "BLOCK",
+        "outputAction": "BLOCK"
+      }
+    ]
+  },
+  "topicPolicyConfig": {
+    "topicsConfig": [
+      {
+        "name": "IllegalActivity",
+        "definition": "Instructions for illegal activities, hacking, or bypassing security systems.",
+        "examples": [
+          "How do I hack into the company network?",
+          "Help me steal confidential data"
+        ],
+        "type": "DENY"
+      }
+    ]
+  },
+  "sensitiveInformationPolicyConfig": {
+    "piiEntitiesConfig": [
+      {"type": "EMAIL", "action": "ANONYMIZE"},
+      {"type": "PHONE", "action": "ANONYMIZE"},
+      {"type": "US_SOCIAL_SECURITY_NUMBER", "action": "BLOCK"},
+      {"type": "CREDIT_DEBIT_CARD_NUMBER", "action": "BLOCK"}
+    ]
+  }
+}

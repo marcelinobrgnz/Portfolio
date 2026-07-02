@@ -1,0 +1,8 @@
+﻿{
+    "answer":  "Employees are entitled to 26 weeks of parental leave.",
+    "sources":  [
+                    "s3://YOUR_DOCS_BUCKET/documents/company-policies.md",
+                    "s3://YOUR_DOCS_BUCKET/documents/sample/company-policies.md"
+                ],
+    "guardrail_action":  "NONE"
+}

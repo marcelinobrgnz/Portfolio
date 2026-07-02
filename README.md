@@ -2,12 +2,13 @@
 
 **Marcelino Braganza** · [braganzamarcelino@gmail.com](mailto:braganzamarcelino@gmail.com)
 
-End-to-end machine learning engineering portfolio: inference platform + batch orchestration.
+End-to-end machine learning engineering portfolio: inference platform, batch orchestration, and enterprise RAG on AWS.
 
 | # | Project | Tagline | Folder |
 |---|---------|---------|--------|
 | 1 | **MLOps Inference Platform** | Train → track → serve → test → monitor | [`mlops-inference-platform/`](./mlops-inference-platform/) |
 | 2 | **Spark-Orchestrated ML Pipeline** | Batch data → Spark → Airflow → retrain | [`spark-orchestrated-ml-pipeline/`](./spark-orchestrated-ml-pipeline/) |
+| 3 | **SecureGuard RAG** | Bedrock RAG + guardrails + Streamlit + Lambda API | [`secureguard-rag/`](./secureguard-rag/) |
 
 ## Engineering metrics (measured)
 
@@ -29,6 +30,9 @@ cd mlops-inference-platform && pip install -r requirements-dev.txt && pytest tes
 
 # Project 2
 cd spark-orchestrated-ml-pipeline && pip install -r requirements-dev.txt && pytest tests/ -v
+
+# Project 3 (AWS account required; copy config.env.example → config.env)
+cd secureguard-rag && pip install -r requirements.txt && python scripts/step01_verify_aws.py
 ```
 
 ## License

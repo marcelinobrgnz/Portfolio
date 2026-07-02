@@ -1,0 +1,7 @@
+{
+  "type": "KNOWLEDGE_BASE",
+  "knowledgeBaseConfiguration": {
+    "knowledgeBaseId": "JV4VOCHIGT",
+    "modelArn": "arn:aws:bedrock:eu-west-1::foundation-model/mistral.mistral-large-2402-v1:0"
+  }
+}
