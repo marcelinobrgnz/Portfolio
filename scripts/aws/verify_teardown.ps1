@@ -15,8 +15,12 @@ function Check($name, $cmd) {
 $checks = @(
   (Check "ECS clusters" "aws ecs list-clusters --region $Region --query clusterArns --output text")
   (Check "ECR repositories" "aws ecr describe-repositories --region $Region --query 'repositories[].repositoryName' --output text")
-  (Check "CloudWatch log groups" "aws logs describe-log-groups --log-group-name-prefix /ecs/ --region $Region --query 'logGroups[].logGroupName' --output text")
-  (Check "Demo security group" "aws ec2 describe-security-groups --filters Name=group-name,Values=portfolio-wine-api-demo-sg --region $Region --query 'SecurityGroups[].GroupId' --output text")
+  (Check "CloudWatch /ecs log groups" "aws logs describe-log-groups --log-group-name-prefix /ecs/ --region $Region --query 'logGroups[].logGroupName' --output text")
+  (Check "Demo security groups" "aws ec2 describe-security-groups --filters Name=group-name,Values=portfolio-wine-api-demo-sg,airflow-ui-demo-sg --region $Region --query 'SecurityGroups[].GroupId' --output text")
+  (Check "SageMaker endpoints" "aws sagemaker list-endpoints --region $Region --query 'Endpoints[?EndpointStatus!=``Failed``].EndpointName' --output text")
+  (Check "EMR Serverless apps" "aws emr-serverless list-applications --region $Region --query 'applications[].name' --output text")
+  (Check "EKS clusters" "aws eks list-clusters --region $Region --query clusters --output text")
+  (Check "MWAA environments" "aws mwaa list-environments --region $Region --query Environments --output text")
 )
 
 $s3 = aws s3 ls s3://mlops-inference-platform-864981752170/ --region $Region 2>&1 | Out-String
@@ -46,13 +50,16 @@ foreach ($c in $checks) {
 [void]$sb.AppendLine("|----------|---------|")
 [void]$sb.AppendLine("| S3 artifacts | under 2 USD |")
 [void]$sb.AppendLine("| ECS / Fargate / ECR | 0 USD |")
-[void]$sb.AppendLine("| SageMaker | 0 USD |")
+[void]$sb.AppendLine("| SageMaker endpoints | 0 USD |")
+[void]$sb.AppendLine("| EMR Serverless | 0 USD |")
+[void]$sb.AppendLine("| EKS | 0 USD |")
+[void]$sb.AppendLine("| MWAA | 0 USD |")
 [void]$sb.AppendLine("")
 
 if ($billable.Count -eq 0) {
   [void]$sb.AppendLine("**Result: No active compute billing from this demo.**")
 } else {
-  [void]$sb.AppendLine("**Result: $($billable.Count) resource(s) still present.**")
+  [void]$sb.AppendLine("**Result: $($billable.Count) resource(s) still present — review above.**")
 }
 
 $text = $sb.ToString()

@@ -58,15 +58,27 @@ if (-not (Test-Path $crane)) {
 }
 
 $gh = "C:\Users\Marcelino\AppData\Local\Temp\gh-cli\bin\gh.exe"
-$ghToken = & $gh auth token
+if (-not (Test-Path $gh)) { $ghCmd = Get-Command gh -ErrorAction SilentlyContinue; if ($ghCmd) { $gh = $ghCmd.Source } }
 $prevEa = $ErrorActionPreference
 $ErrorActionPreference = "Continue"
-$ghToken | & $crane auth login ghcr.io -u marcelinobrgnz --password-stdin 2>&1 | Out-Null
+if ($gh -and (Test-Path $gh)) {
+  $ghToken = & $gh auth token
+  if ($ghToken) { $ghToken | & $crane auth login ghcr.io -u marcelinobrgnz --password-stdin 2>&1 | Out-Null }
+} else {
+  Write-Host "gh CLI not found - trying anonymous GHCR pull"
+}
 aws ecr get-login-password --region $Region | & $crane auth login "$AccountId.dkr.ecr.$Region.amazonaws.com" -u AWS --password-stdin 2>&1 | Out-Null
 $imageCheck = Invoke-Aws ecr describe-images --repository-name $EcrRepo --image-ids imageTag=latest --region $Region
 if (-not $imageCheck.Ok) {
   Write-Host "Copying image from GHCR to ECR..."
   & $crane copy $GhcrImage $EcrImage 2>&1 | Out-Null
+  if ($LASTEXITCODE -ne 0) {
+    Write-Host "crane copy failed - building locally with Docker..."
+    docker build -f "D:\IIMA\Portfolio\mlops-inference-platform\Dockerfile.api" -t $EcrImage "D:\IIMA\Portfolio\mlops-inference-platform"
+    if ($LASTEXITCODE -ne 0) { throw "Failed to build Docker image for ECS" }
+    docker push $EcrImage
+    if ($LASTEXITCODE -ne 0) { throw "Failed to push image to ECR" }
+  }
 } else {
   Write-Host "ECR image :latest already present, skipping crane copy"
 }

@@ -1,0 +1,77 @@
+{
+    "cluster": {
+        "name": "portfolio-eks-demo",
+        "arn": "arn:aws:eks:eu-west-1:864981752170:cluster/portfolio-eks-demo",
+        "createdAt": "2026-07-02T19:00:52.837000+05:30",
+        "version": "1.30",
+        "endpoint": "https://4C50315E8FABC4C8FDAE2D3E7FB825CB.gr7.eu-west-1.eks.amazonaws.com",
+        "roleArn": "arn:aws:iam::864981752170:role/eksctl-portfolio-eks-demo-cluster-ServiceRole-vSv09TYlMAaW",
+        "resourcesVpcConfig": {
+            "subnetIds": [
+                "subnet-0b61e5ee76a43d654",
+                "subnet-0cd91a58c9ec0c3be",
+                "subnet-0a59fcbbbb8cd8ea4",
+                "subnet-0de1597c772936720",
+                "subnet-0bf2fc629ef7a7868",
+                "subnet-069bbe984edd9e0ee"
+            ],
+            "securityGroupIds": [
+                "sg-04f32031afab26255"
+            ],
+            "clusterSecurityGroupId": "sg-0fcbc903f82099386",
+            "vpcId": "vpc-092255e17ab0e743e",
+            "endpointPublicAccess": true,
+            "endpointPrivateAccess": false,
+            "publicAccessCidrs": [
+                "0.0.0.0/0"
+            ]
+        },
+        "kubernetesNetworkConfig": {
+            "serviceIpv4Cidr": "10.100.0.0/16",
+            "ipFamily": "ipv4",
+            "elasticLoadBalancing": {
+                "enabled": false
+            }
+        },
+        "logging": {
+            "clusterLogging": [
+                {
+                    "types": [
+                        "api",
+                        "audit",
+                        "authenticator",
+                        "controllerManager",
+                        "scheduler"
+                    ],
+                    "enabled": false
+                }
+            ]
+        },
+        "identity": {
+            "oidc": {
+                "issuer": "https://oidc.eks.eu-west-1.amazonaws.com/id/4C50315E8FABC4C8FDAE2D3E7FB825CB"
+            }
+        },
+        "status": "ACTIVE",
+        "certificateAuthority": {
+            "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJUm1vNUZIL2Z5Mmd3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TmpBM01ESXhNek13TVRkYUZ3MHpOakEyTWpreE16TTFNVGRhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUURYU3RyK1NhSUNUUGF3ZkwzNWlkZUh6UlBGUzJTSjg1RjNBZXo1ZjU4OGwxdW5jY3J5ZHlHOTZSaEYKeGsrNXJPTWllbHhYcTlkc2JmTGhkUXovSS8wVDNkcE5SQW9wWmkvSEFYVXhobTVYOVlqeHdYZkFtVTZzUWZFdQpkemgyVThDQjhCaE1NaUlJVkR4UUkrdHNzUGNXZEtsRTU1N3dXb3U1cnRXc0ZQZWZzTmVNaWZDbUJnMDE3bit4CjlCVzJ2Q2QrRFVnb3lyUm1zNVR0bVNUU3FhdTFWRWN1OG9SN0phWm9uNWhjLzF5K001aVpxeFU5M2dOL2RuOG0KbUQwVC9TWDB2a21KbGM4c0o0NjVxTDBoaFMzTHJYNlFyaG9yUmlUdzk5RUE4WFcyeFdxUVoyLzlvZGhkNEJzegpRRHlUM2VoTHpLbGh3emlTVlNEQW8zL3hhRTJYQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJUQmFQNFNSTEx1cXQ5bnNZNisxRVVtMGk5TjREQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQTVVK003MlBXWApMZU1DODZHdVNBRGcySS9IcjFnQnhGaXAzK0haMkFsallxUTh3OUVGM2JWSnE4S213aHlzVmpkb2QzQUdZRWtBCjNnNFRXTnU1MUZxb2RQZ01hNUo5QW9HcmJvQmNTcTNJc1o5OUJKYjRwUkZDV2xlVGg4bFJQMDJBYjdGRUgrU2oKVzU0cTFmTnAxLzFERTM5ZjE1cnIzOVdzTEU0QldYMHlKWVJDWDRHa0t4cGhvSVpBcXdEZGxyK2RUY3hQQ1Jxbwp5bkViZ0pzOHJRS3VteHJUUHdOb0VKTjRxQk81Z2NZYVcvV2RTMGJjbm1jdiswMGE0WXZXRmoxSmlIUUxreXdDCkx5dlFnc0szb0pTcGU4MUFSc2d0VXNCc3FBOXpmTXZiUnVjWVU1WXNMYTF2NFVpaTdmRmVRZEs1Sm96eDRzTCsKeUUwRVBSYVA5dCt3Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+        },
+        "platformVersion": "eks.72",
+        "tags": {
+            "aws:cloudformation:stack-name": "eksctl-portfolio-eks-demo-cluster",
+            "alpha.eksctl.io/cluster-name": "portfolio-eks-demo",
+            "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-1:864981752170:stack/eksctl-portfolio-eks-demo-cluster/2dbb1a60-761a-11f1-99f1-02bf2c01e01d",
+            "eksctl.cluster.k8s.io/v1alpha1/cluster-name": "portfolio-eks-demo",
+            "alpha.eksctl.io/cluster-oidc-enabled": "false",
+            "aws:cloudformation:logical-id": "ControlPlane",
+            "alpha.eksctl.io/eksctl-version": "0.194.0",
+            "Name": "eksctl-portfolio-eks-demo-cluster/ControlPlane"
+        },
+        "accessConfig": {
+            "authenticationMode": "API_AND_CONFIG_MAP"
+        },
+        "upgradePolicy": {
+            "supportType": "EXTENDED"
+        }
+    }
+}

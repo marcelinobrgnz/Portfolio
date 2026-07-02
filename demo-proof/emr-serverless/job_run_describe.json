@@ -1,0 +1,59 @@
+{
+    "jobRun":  {
+                   "applicationId":  "00g6tf3ffgbh4u0p",
+                   "jobRunId":  "00g6tg1q5f0f2o0r",
+                   "name":  "wine-etl-demo-3",
+                   "arn":  "arn:aws:emr-serverless:eu-west-1:864981752170:/applications/00g6tf3ffgbh4u0p/jobruns/00g6tg1q5f0f2o0r",
+                   "createdBy":  "arn:aws:iam::864981752170:user/rascal-vertex",
+                   "createdAt":  "2026-07-02T19:52:56.457000+05:30",
+                   "updatedAt":  "2026-07-02T19:54:05.930000+05:30",
+                   "executionRole":  "arn:aws:iam::864981752170:role/EMRServerlessWineDemoRole",
+                   "state":  "FAILED",
+                   "stateDetails":  "ModuleNotFoundError: No module named \u0027spark_jobs\u0027. Please refer to user guide on how to use python libraries with EMR Serverless.",
+                   "releaseLabel":  "emr-7.0.0",
+                   "configurationOverrides":  {
+                                                  "monitoringConfiguration":  {
+                                                                                  "managedPersistenceMonitoringConfiguration":  {
+                                                                                                                                    "enabled":  true
+                                                                                                                                }
+                                                                              }
+                                              },
+                   "jobDriver":  {
+                                     "sparkSubmit":  {
+                                                         "entryPoint":  "s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs/transform.py",
+                                                         "entryPointArguments":  [
+                                                                                     "--dataset",
+                                                                                     "wine",
+                                                                                     "--input",
+                                                                                     "s3://mlops-inference-platform-864981752170/emr-demo/input/wine/",
+                                                                                     "--output",
+                                                                                     "s3://mlops-inference-platform-864981752170/emr-demo/output/wine/",
+                                                                                     "--metrics-file",
+                                                                                     "s3://mlops-inference-platform-864981752170/emr-demo/output/wine/_metrics.json"
+                                                                                 ],
+                                                         "sparkSubmitParameters":  "--py-files s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs.zip --conf spark.executor.cores=2 --conf spark.executor.memory=4g --conf spark.driver.cores=2 --conf spark.driver.memory=4g"
+                                                     }
+                                 },
+                   "tags":  {
+
+                            },
+                   "totalResourceUtilization":  {
+                                                    "vCPUHour":  0.007,
+                                                    "memoryGBHour":  0.018,
+                                                    "storageGBHour":  0.072
+                                                },
+                   "totalExecutionDurationSeconds":  12,
+                   "executionTimeoutMinutes":  720,
+                   "billedResourceUtilization":  {
+                                                     "vCPUHour":  0.033,
+                                                     "memoryGBHour":  0.083,
+                                                     "storageGBHour":  0.0
+                                                 },
+                   "mode":  "BATCH",
+                   "attempt":  1,
+                   "attemptCreatedAt":  "2026-07-02T19:52:56.457000+05:30",
+                   "attemptUpdatedAt":  "2026-07-02T19:54:05.930000+05:30",
+                   "startedAt":  "2026-07-02T19:53:53.887000+05:30",
+                   "endedAt":  "2026-07-02T19:54:05.930000+05:30"
+               }
+}

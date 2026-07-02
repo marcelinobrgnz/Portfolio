@@ -1,0 +1,14 @@
+﻿{
+    "apiUrl":  "http://3.250.190.207:8000",
+    "teardownScheduledAtUtc":  "2026-07-02T14:34:54.1570474Z",
+    "region":  "eu-west-1",
+    "subnetId":  "subnet-0fdf9810d55d97daf",
+    "publicIp":  "3.250.190.207",
+    "securityGroupId":  "sg-0a166807e18b5042f",
+    "ecrRepo":  "portfolio-wine-api",
+    "service":  "wine-quality-api",
+    "taskDefinitionArn":  "arn:aws:ecs:eu-west-1:864981752170:task-definition/portfolio-wine-api:4",
+    "cluster":  "portfolio-wine-demo",
+    "deployedAtUtc":  "2026-07-02T13:34:54.1570474Z",
+    "taskArn":  "arn:aws:ecs:eu-west-1:864981752170:task/portfolio-wine-demo/7cf770a7e9724529b0bebeefe2837c00"
+}

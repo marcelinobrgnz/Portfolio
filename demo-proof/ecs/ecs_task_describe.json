@@ -3,7 +3,7 @@
         {
             "attachments": [
                 {
-                    "id": "e963915c-eeee-45c4-883b-6ba8888b196d",
+                    "id": "09959dd0-ed98-490a-b3ae-3a1382bc6c8b",
                     "type": "ElasticNetworkInterface",
                     "status": "ATTACHED",
                     "details": [
@@ -13,19 +13,19 @@
                         },
                         {
                             "name": "networkInterfaceId",
-                            "value": "eni-0b56c55a712d1398a"
+                            "value": "eni-078fe3427ee659dcd"
                         },
                         {
                             "name": "macAddress",
-                            "value": "0a:52:a4:a0:39:21"
+                            "value": "0a:c5:ee:87:33:43"
                         },
                         {
                             "name": "privateDnsName",
-                            "value": "ip-172-31-32-224.eu-west-1.compute.internal"
+                            "value": "ip-172-31-39-176.eu-west-1.compute.internal"
                         },
                         {
                             "name": "privateIPv4Address",
-                            "value": "172.31.32.224"
+                            "value": "172.31.39.176"
                         }
                     ]
                 }
@@ -39,21 +39,21 @@
             "availabilityZone": "eu-west-1c",
             "clusterArn": "arn:aws:ecs:eu-west-1:864981752170:cluster/portfolio-wine-demo",
             "connectivity": "CONNECTED",
-            "connectivityAt": "2026-07-01T19:27:04.088000+05:30",
+            "connectivityAt": "2026-07-02T19:03:59.772000+05:30",
             "containers": [
                 {
-                    "containerArn": "arn:aws:ecs:eu-west-1:864981752170:container/portfolio-wine-demo/881cfc3b354e4b898ea422c014ca911a/e618cbe6-16b2-45b7-9b4c-985b2cff1eb7",
-                    "taskArn": "arn:aws:ecs:eu-west-1:864981752170:task/portfolio-wine-demo/881cfc3b354e4b898ea422c014ca911a",
+                    "containerArn": "arn:aws:ecs:eu-west-1:864981752170:container/portfolio-wine-demo/7cf770a7e9724529b0bebeefe2837c00/f4ace335-caf5-4ce0-9032-fccf97adbc22",
+                    "taskArn": "arn:aws:ecs:eu-west-1:864981752170:task/portfolio-wine-demo/7cf770a7e9724529b0bebeefe2837c00",
                     "name": "api",
                     "image": "864981752170.dkr.ecr.eu-west-1.amazonaws.com/portfolio-wine-api:latest",
-                    "imageDigest": "sha256:84e3f620d3c8e6ee048e7f3945f629cb4d08f85eea19185934a1952bc83849ba",
-                    "runtimeId": "881cfc3b354e4b898ea422c014ca911a-0946514567",
+                    "imageDigest": "sha256:bbf4708995bbeb2b819bfc46efe9eec2943fd656bd625b795c6efecc5b28ec8d",
+                    "runtimeId": "7cf770a7e9724529b0bebeefe2837c00-0946514567",
                     "lastStatus": "RUNNING",
                     "networkBindings": [],
                     "networkInterfaces": [
                         {
-                            "attachmentId": "e963915c-eeee-45c4-883b-6ba8888b196d",
-                            "privateIpv4Address": "172.31.32.224"
+                            "attachmentId": "09959dd0-ed98-490a-b3ae-3a1382bc6c8b",
+                            "privateIpv4Address": "172.31.39.176"
                         }
                     ],
                     "healthStatus": "UNKNOWN",
@@ -61,7 +61,7 @@
                 }
             ],
             "cpu": "256",
-            "createdAt": "2026-07-01T19:27:00.139000+05:30",
+            "createdAt": "2026-07-02T19:03:55.862000+05:30",
             "desiredStatus": "RUNNING",
             "enableExecuteCommand": false,
             "group": "family:portfolio-wine-api",
@@ -79,12 +79,12 @@
             },
             "platformVersion": "1.4.0",
             "platformFamily": "Linux",
-            "pullStartedAt": "2026-07-01T19:27:11.064000+05:30",
-            "pullStoppedAt": "2026-07-01T19:27:28.833000+05:30",
-            "startedAt": "2026-07-01T19:27:28.999000+05:30",
+            "pullStartedAt": "2026-07-02T19:04:05.576000+05:30",
+            "pullStoppedAt": "2026-07-02T19:04:24.470000+05:30",
+            "startedAt": "2026-07-02T19:04:25.313000+05:30",
             "tags": [],
-            "taskArn": "arn:aws:ecs:eu-west-1:864981752170:task/portfolio-wine-demo/881cfc3b354e4b898ea422c014ca911a",
-            "taskDefinitionArn": "arn:aws:ecs:eu-west-1:864981752170:task-definition/portfolio-wine-api:3",
+            "taskArn": "arn:aws:ecs:eu-west-1:864981752170:task/portfolio-wine-demo/7cf770a7e9724529b0bebeefe2837c00",
+            "taskDefinitionArn": "arn:aws:ecs:eu-west-1:864981752170:task-definition/portfolio-wine-api:4",
             "version": 3,
             "ephemeralStorage": {
                 "sizeInGiB": 20

@@ -1,0 +1,12 @@
+NAME                                    READY   STATUS    RESTARTS   AGE   IP               NODE                                          NOMINATED NODE   READINESS GATES
+pod/wine-quality-api-697cff87df-dxwjh   1/1     Running   0          39s   192.168.72.242   ip-192-168-80-43.eu-west-1.compute.internal   <none>           <none>
+
+NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+service/kubernetes         ClusterIP   10.100.0.1       <none>        443/TCP          26m   <none>
+service/wine-quality-api   NodePort    10.100.161.193   <none>        8000:30080/TCP   39s   app=wine-quality-api
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                                   SELECTOR
+deployment.apps/wine-quality-api   1/1     1            1           39s   api          864981752170.dkr.ecr.eu-west-1.amazonaws.com/portfolio-wine-api:latest   app=wine-quality-api
+
+NAME                                          DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                                                                   SELECTOR
+replicaset.apps/wine-quality-api-697cff87df   1         1         1       40s   api          864981752170.dkr.ecr.eu-west-1.amazonaws.com/portfolio-wine-api:latest   app=wine-quality-api,pod-template-hash=697cff87df

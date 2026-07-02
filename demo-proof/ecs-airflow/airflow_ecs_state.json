@@ -1,0 +1,10 @@
+﻿{
+    "cluster":  "airflow-ui-demo-cluster",
+    "securityGroupId":  "sg-0f419c2bda6f55312",
+    "airflowUrl":  "http://54.194.28.113:8080",
+    "deployedAtUtc":  "2026-07-02T13:31:25.6644362Z",
+    "publicIp":  "54.194.28.113",
+    "login":  "admin/admin",
+    "region":  "eu-west-1",
+    "taskArn":  "arn:aws:ecs:eu-west-1:864981752170:task/airflow-ui-demo-cluster/a309f66a88b3472c9c337d579a41c12b"
+}

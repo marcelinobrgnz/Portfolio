@@ -1,0 +1,12 @@
+{
+  "sparkSubmit": {
+    "entryPoint": "s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs/transform.py",
+    "entryPointArguments": [
+      "--dataset", "wine",
+      "--input", "s3://mlops-inference-platform-864981752170/emr-demo/input/wine/",
+      "--output", "s3://mlops-inference-platform-864981752170/emr-demo/output/wine/",
+      "--metrics-file", "s3://mlops-inference-platform-864981752170/emr-demo/output/wine/_metrics.json"
+    ],
+    "sparkSubmitParameters": "--py-files s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs.zip --conf spark.executor.cores=2 --conf spark.executor.memory=4g --conf spark.driver.cores=2 --conf spark.driver.memory=4g"
+  }
+}

@@ -1,0 +1,7 @@
+﻿{
+    "endpoint":  "wine-quality-demo-ep",
+    "tornDownAtUtc":  "2026-07-02T14:26:26.3753819Z",
+    "preserved":  [
+                      "s3://mlops-inference-platform-864981752170/sagemaker/"
+                  ]
+}
