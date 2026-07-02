@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -13,24 +14,35 @@ from pyspark.sql import functions as F
 # Allow `python spark_jobs/transform.py` from repo root
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from spark_jobs.helpers import (  # noqa: E402
-    WINE_BOUNDS,
-    WINE_TYPE_MAP,
-    normalize_wine_column,
-)
+try:
+  from spark_jobs.helpers import (  # noqa: E402
+      WINE_BOUNDS,
+      WINE_TYPE_MAP,
+      normalize_wine_column,
+  )
+except ModuleNotFoundError:
+  from helpers import (  # noqa: E402
+      WINE_BOUNDS,
+      WINE_TYPE_MAP,
+      normalize_wine_column,
+  )
 
 
 def create_spark(app_name: str, master: str) -> SparkSession:
   builder = (
       SparkSession.builder.appName(app_name)
-      .master(master)
       .config("spark.sql.shuffle.partitions", "8")
       .config("spark.sql.parquet.compression.codec", "snappy")
   )
+  # EMR Serverless configures the cluster manager; do not override with local/yarn.
+  if master:
+    builder = builder.master(master)
   # S3 access when running with hadoop-aws on classpath (Docker / EMR)
   builder = builder.config(
       "spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem"
   )
+  region = os.environ.get("AWS_REGION", os.environ.get("AWS_DEFAULT_REGION", "eu-west-1"))
+  builder = builder.config("spark.hadoop.fs.s3a.endpoint.region", region)
   return builder.getOrCreate()
 
 
@@ -160,7 +172,7 @@ def main() -> None:
   parser.add_argument("--dataset", choices=["wine", "taxi"], required=True)
   parser.add_argument("--input", required=True, help="Raw input path (CSV dir or Parquet)")
   parser.add_argument("--output", required=True, help="Feature store output (local or s3a://)")
-  parser.add_argument("--master", default="local[*]")
+  parser.add_argument("--master", default="", help="Spark master (omit on EMR Serverless)")
   parser.add_argument("--metrics-file", default="")
   args = parser.parse_args()
 

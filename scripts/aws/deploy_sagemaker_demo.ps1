@@ -54,20 +54,33 @@ tar -czf $tarPath wine_quality_model.pkl code
 Pop-Location
 aws s3 cp $tarPath "s3://$Bucket/sagemaker/wine-sagemaker-model.tar.gz" --region $Region
 
-Write-Host "==> Build custom SageMaker image in ECR" -ForegroundColor Cyan
-$SgImage = "${AccountId}.dkr.ecr.${Region}.amazonaws.com/portfolio-wine-sagemaker:latest"
-aws ecr describe-repositories --repository-names portfolio-wine-sagemaker --region $Region 2>$null
-if ($LASTEXITCODE -ne 0) { aws ecr create-repository --repository-name portfolio-wine-sagemaker --region $Region | Out-Null }
-aws ecr get-login-password --region $Region | docker login --username AWS --password-stdin "${AccountId}.dkr.ecr.${Region}.amazonaws.com" 2>$null
-docker build -f "D:\IIMA\Portfolio\scripts\sagemaker\Dockerfile.sagemaker" -t $SgImage "D:\IIMA\Portfolio"
-docker push $SgImage
-
-Write-Host "==> Create SageMaker model" -ForegroundColor Cyan
-$imageUri = $SgImage
+Write-Host "==> Create SageMaker model (sklearn DLC)" -ForegroundColor Cyan
+$SklearnImage = "763104351884.dkr.ecr.${Region}.amazonaws.com/sklearn-inference:1.2-1-cpu-py3"
+$ModelDataUrl = "s3://$Bucket/sagemaker/wine-sagemaker-model.tar.gz"
 aws sagemaker delete-model --model-name $ModelName --region $Region 2>$null
-aws sagemaker create-model --model-name $ModelName --region $Region `
+$createModel = aws sagemaker create-model --model-name $ModelName --region $Region `
   --execution-role-arn $RoleArn `
-  --primary-container "Image=$imageUri" | Out-Null
+  --primary-container "Image=$SklearnImage,ModelDataUrl=$ModelDataUrl,Environment={SAGEMAKER_PROGRAM=inference.py}" 2>&1
+if ($LASTEXITCODE -ne 0) {
+  Write-Warning "sklearn DLC model failed; falling back to BYOC image"
+  Write-Host $createModel
+  Write-Host "==> Build custom SageMaker image in ECR" -ForegroundColor Cyan
+  $SgImage = "${AccountId}.dkr.ecr.${Region}.amazonaws.com/portfolio-wine-sagemaker:latest"
+  aws ecr describe-repositories --repository-names portfolio-wine-sagemaker --region $Region 2>$null
+  if ($LASTEXITCODE -ne 0) { aws ecr create-repository --repository-name portfolio-wine-sagemaker --region $Region | Out-Null }
+  aws ecr get-login-password --region $Region | docker login --username AWS --password-stdin "${AccountId}.dkr.ecr.${Region}.amazonaws.com" 2>$null
+  aws ecr batch-delete-image --repository-name portfolio-wine-sagemaker --region $Region --image-ids imageTag=latest 2>$null | Out-Null
+  docker buildx build --platform linux/amd64 --provenance=false --sbom=false `
+    -f "D:\IIMA\Portfolio\scripts\sagemaker\Dockerfile.sagemaker" `
+    -t $SgImage `
+    --output "type=registry,oci-mediatypes=false" `
+    "D:\IIMA\Portfolio"
+  if ($LASTEXITCODE -ne 0) { throw "Docker buildx push failed" }
+  aws sagemaker delete-model --model-name $ModelName --region $Region 2>$null
+  aws sagemaker create-model --model-name $ModelName --region $Region `
+    --execution-role-arn $RoleArn `
+    --primary-container "Image=$SgImage" | Out-Null
+}
 
 Write-Host "==> Create endpoint config + endpoint ($InstanceType)" -ForegroundColor Cyan
 aws sagemaker delete-endpoint-config --endpoint-config-name $EndConfigName --region $Region 2>$null
@@ -85,7 +98,7 @@ do {
   $status = aws sagemaker describe-endpoint --endpoint-name $EndpointName --region $Region `
     --query "EndpointStatus" --output text
   Write-Host "  status: $status"
-  if ($attempts -ge 40) { throw "SageMaker endpoint timeout" }
+  if ($attempts -ge 50) { throw "SageMaker endpoint timeout" }
 } while ($status -ne "InService")
 
 $describe = aws sagemaker describe-endpoint --endpoint-name $EndpointName --region $Region | ConvertFrom-Json

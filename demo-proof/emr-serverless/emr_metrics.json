@@ -1,0 +1,12 @@
+﻿{
+    "jobState":  "SUCCESS",
+    "releaseLabel":  "emr-7.0.0",
+    "region":  "eu-west-1",
+    "applicationId":  "00g6ti26amk2al0p",
+    "inputPath":  "s3://mlops-inference-platform-864981752170/emr-demo/input/wine/",
+    "outputPath":  "s3://mlops-inference-platform-864981752170/emr-demo/output/wine/",
+    "jobDurationSec":  183.7,
+    "service":  "EMR Serverless Spark",
+    "applicationState":  "STARTED",
+    "jobRunId":  "00g6tjkq9nrmm80r"
+}

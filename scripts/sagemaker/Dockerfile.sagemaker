@@ -2,7 +2,9 @@ FROM python:3.11-slim
 WORKDIR /opt/ml
 RUN pip install --no-cache-dir flask gunicorn joblib numpy scikit-learn xgboost
 COPY scripts/sagemaker/serve.py /opt/ml/code/serve.py
+COPY scripts/sagemaker/wsgi.py /opt/ml/code/wsgi.py
 COPY mlops-inference-platform/models/wine_quality_model.pkl /opt/ml/model/wine_quality_model.pkl
 ENV PYTHONPATH=/opt/ml/code
 EXPOSE 8080
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "1", "serve:app", "--chdir", "/opt/ml/code"]
+ENTRYPOINT ["python", "/opt/ml/code/wsgi.py"]
+CMD ["serve"]

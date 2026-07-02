@@ -32,6 +32,11 @@ $RoleArn = "arn:aws:iam::${AccountId}:role/${RoleName}"
 
 Write-Host "==> Upload Spark scripts to S3" -ForegroundColor Cyan
 aws s3 sync "$P2Root\spark_jobs" "s3://$Bucket/emr-demo/spark_jobs/" --region $Region --exclude "__pycache__/*"
+$helpersZip = "$ProofDir\helpers_pkg.zip"
+if (Test-Path $helpersZip) { Remove-Item $helpersZip -Force }
+Compress-Archive -Path "$P2Root\spark_jobs\helpers.py" -DestinationPath $helpersZip -Force
+aws s3 cp $helpersZip "s3://$Bucket/emr-demo/helpers_pkg.zip" --region $Region
+aws s3 cp "$P2Root\spark_jobs\transform.py" "s3://$Bucket/emr-demo/spark_jobs/transform.py" --region $Region
 aws s3 cp "$P2Root\data\raw\wine\winequality-red.csv" "s3://$Bucket/emr-demo/input/wine/winequality-red.csv" --region $Region 2>$null
 aws s3 cp "$P2Root\data\raw\wine\winequality-white.csv" "s3://$Bucket/emr-demo/input/wine/winequality-white.csv" --region $Region 2>$null
 if ($LASTEXITCODE -ne 0) {
@@ -39,9 +44,15 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "==> Create EMR Serverless application" -ForegroundColor Cyan
-$appJson = aws emr-serverless create-application --name $AppName --release-label emr-7.0.0 --type SPARK --region $Region | ConvertFrom-Json
-$AppId = $appJson.applicationId
-Write-Host "ApplicationId: $AppId"
+$existing = aws emr-serverless list-applications --region $Region --query "applications[?name=='$AppName'].id" --output text 2>$null
+if ($existing) {
+  $AppId = $existing.Trim()
+  Write-Host "Reusing application: $AppId"
+} else {
+  $appJson = aws emr-serverless create-application --name $AppName --release-label emr-7.0.0 --type SPARK --region $Region | ConvertFrom-Json
+  $AppId = $appJson.applicationId
+  Write-Host "ApplicationId: $AppId"
+}
 
 aws emr-serverless start-application --application-id $AppId --region $Region 2>$null | Out-Null
 
@@ -60,16 +71,19 @@ $entryPoint = "s3://$Bucket/emr-demo/spark_jobs/transform.py"
 $outputPath = "s3://$Bucket/emr-demo/output/wine/"
 $inputPath = "s3://$Bucket/emr-demo/input/wine/"
 
+$jobDriverFile = "$ProofDir\job_driver.json"
+@{
+  sparkSubmit = @{
+    entryPoint = $entryPoint
+    entryPointArguments = @("--dataset", "wine", "--input", "s3a://$Bucket/emr-demo/input/wine/", "--output", "s3a://$Bucket/emr-demo/output/wine/", "--metrics-file", "/tmp/wine_emr_metrics.json")
+    sparkSubmitParameters = "--py-files s3://$Bucket/emr-demo/helpers_pkg.zip --conf spark.hadoop.fs.s3a.endpoint.region=$Region --conf spark.hadoop.fs.s3a.endpoint=s3.$Region.amazonaws.com --conf spark.executor.cores=2 --conf spark.executor.memory=4g --conf spark.driver.cores=2 --conf spark.driver.memory=4g"
+  }
+} | ConvertTo-Json -Depth 5 | Set-Content $jobDriverFile -Encoding Ascii
+
 $jobRunJson = aws emr-serverless start-job-run --application-id $AppId --region $Region `
   --execution-role-arn $RoleArn `
   --name "wine-etl-demo" `
-  --job-driver "{
-    `"sparkSubmit`": {
-      `"entryPoint`": `"$entryPoint`",
-      `"entryPointArguments`": [`"--dataset`",`"wine`",`"--input`",`"$inputPath`",`"--output`",`"$outputPath`",`"--metrics-file`",`"$outputPath/_metrics.json`"],
-      `"sparkSubmitParameters`": `"--conf spark.executor.cores=2 --conf spark.executor.memory=4g --conf spark.driver.cores=2 --conf spark.driver.memory=4g`"
-    }
-  }" | ConvertFrom-Json
+  --job-driver "file://$($jobDriverFile -replace '\\','/')" | ConvertFrom-Json
 
 $JobRunId = $jobRunJson.jobRunId
 Write-Host "JobRunId: $JobRunId"
@@ -83,11 +97,11 @@ do {
   $jstate = $job.jobRun.state
   Write-Host "  job state: $jstate"
   if ($jstate -in @("SUCCESS", "FAILED", "CANCELLED")) { break }
-  if ($attempts -ge 40) { throw "EMR job timeout" }
+  if ($attempts -ge 60) { throw "EMR job timeout" }
 } while ($true)
 
 $job | ConvertTo-Json -Depth 8 | Set-Content "$ProofDir\job_run_describe.json" -Encoding UTF8
-aws s3 cp "s3://$Bucket/emr-demo/output/wine/_metrics.json" "$ProofDir\emr_wine_metrics.json" --region $Region 2>$null
+aws s3 ls "s3://$Bucket/emr-demo/output/wine/" --recursive --region $Region 2>&1 | Set-Content "$ProofDir\s3_output_keys.txt" -Encoding Ascii
 
 $metrics = @{
   service = "EMR Serverless Spark"

@@ -1,12 +1,16 @@
 {
-  "sparkSubmit": {
-    "entryPoint": "s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs/transform.py",
-    "entryPointArguments": [
-      "--dataset", "wine",
-      "--input", "s3://mlops-inference-platform-864981752170/emr-demo/input/wine/",
-      "--output", "s3://mlops-inference-platform-864981752170/emr-demo/output/wine/",
-      "--metrics-file", "s3://mlops-inference-platform-864981752170/emr-demo/output/wine/_metrics.json"
-    ],
-    "sparkSubmitParameters": "--py-files s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs.zip --conf spark.executor.cores=2 --conf spark.executor.memory=4g --conf spark.driver.cores=2 --conf spark.driver.memory=4g"
-  }
+    "sparkSubmit":  {
+                        "entryPoint":  "s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs/transform.py",
+                        "entryPointArguments":  [
+                                                    "--dataset",
+                                                    "wine",
+                                                    "--input",
+                                                    "s3a://mlops-inference-platform-864981752170/emr-demo/input/wine/",
+                                                    "--output",
+                                                    "s3a://mlops-inference-platform-864981752170/emr-demo/output/wine/",
+                                                    "--metrics-file",
+                                                    "/tmp/wine_emr_metrics.json"
+                                                ],
+                        "sparkSubmitParameters":  "--py-files s3://mlops-inference-platform-864981752170/emr-demo/helpers_pkg.zip --conf spark.hadoop.fs.s3a.endpoint.region=eu-west-1 --conf spark.hadoop.fs.s3a.endpoint=s3.eu-west-1.amazonaws.com --conf spark.executor.cores=2 --conf spark.executor.memory=4g --conf spark.driver.cores=2 --conf spark.driver.memory=4g"
+                    }
 }

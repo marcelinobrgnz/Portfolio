@@ -59,7 +59,7 @@ foreach ($c in $checks) {
 if ($billable.Count -eq 0) {
   [void]$sb.AppendLine("**Result: No active compute billing from this demo.**")
 } else {
-  [void]$sb.AppendLine("**Result: $($billable.Count) resource(s) still present — review above.**")
+  [void]$sb.AppendLine("**Result: $($billable.Count) resource(s) still present - review above.**")
 }
 
 $text = $sb.ToString()

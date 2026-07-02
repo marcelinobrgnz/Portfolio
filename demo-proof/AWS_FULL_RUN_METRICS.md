@@ -41,19 +41,20 @@
 
 | Metric | Value |
 |--------|-------|
-| Application | portfolio-spark-demo (`00g6tf3ffgbh4u0p`) |
+| Application | portfolio-spark-demo (`00g6ti26amk2al0p`) |
 | Release | emr-7.0.0 |
-| Job runs | 3 attempts (module packaging issue on transform imports) |
-| Billed (last run) | vCPU 0.033 hr, memory 0.083 GB-hr |
-| JSON proof | `demo-proof/emr-serverless/job_run_describe.json` |
+| **Polish run (2026-07-02)** | **SUCCESS** — job `00g6tjkq9nrmm80r` |
+| Output | 2 Parquet partitions (`wine_type=0/1`), 6,497 source rows |
+| JSON proof | `demo-proof/emr-serverless/job_run_describe.json`, `emr_metrics.json` |
 
 ## SageMaker Real-Time Inference
 
 | Metric | Value |
 |--------|-------|
-| Status | **Not deployed** — AWS DLC image permission error; BYOC Docker build interrupted |
-| Logs | `demo-proof/aws-parallel/sagemaker_*.log` |
+| **Polish run status** | CreateModel OK (BYOC); endpoint **Failed** (container `serve` entrypoint) |
+| Fix committed | `scripts/sagemaker/wsgi.py` Python entrypoint |
 | Model artifact on S3 | `s3://.../sagemaker/wine-sagemaker-model.tar.gz` |
+| Details | `demo-proof/AWS_POLISH_RUN_METRICS.md` |
 
 ## MWAA
 

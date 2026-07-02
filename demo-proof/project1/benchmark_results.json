@@ -9,8 +9,8 @@
   "latency_ms_max": 10.17,
   "throughput_rps": 254.5,
   "training_samples": 6497,
-  "test_accuracy_approx": 0.66,
-  "f1_macro_approx": 0.37,
+  "test_accuracy_approx": 0.8123,
+  "f1_macro_approx": 0.678,
   "aws_region": "eu-west-1",
   "s3_bucket": "mlops-inference-platform-864981752170",
   "monthly_aws_cost_estimate_usd": "<2"

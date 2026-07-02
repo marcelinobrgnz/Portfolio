@@ -1,59 +1,57 @@
 {
-    "jobRun":  {
-                   "applicationId":  "00g6tf3ffgbh4u0p",
-                   "jobRunId":  "00g6tg1q5f0f2o0r",
-                   "name":  "wine-etl-demo-3",
-                   "arn":  "arn:aws:emr-serverless:eu-west-1:864981752170:/applications/00g6tf3ffgbh4u0p/jobruns/00g6tg1q5f0f2o0r",
-                   "createdBy":  "arn:aws:iam::864981752170:user/rascal-vertex",
-                   "createdAt":  "2026-07-02T19:52:56.457000+05:30",
-                   "updatedAt":  "2026-07-02T19:54:05.930000+05:30",
-                   "executionRole":  "arn:aws:iam::864981752170:role/EMRServerlessWineDemoRole",
-                   "state":  "FAILED",
-                   "stateDetails":  "ModuleNotFoundError: No module named \u0027spark_jobs\u0027. Please refer to user guide on how to use python libraries with EMR Serverless.",
-                   "releaseLabel":  "emr-7.0.0",
-                   "configurationOverrides":  {
-                                                  "monitoringConfiguration":  {
-                                                                                  "managedPersistenceMonitoringConfiguration":  {
-                                                                                                                                    "enabled":  true
-                                                                                                                                }
-                                                                              }
-                                              },
-                   "jobDriver":  {
-                                     "sparkSubmit":  {
-                                                         "entryPoint":  "s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs/transform.py",
-                                                         "entryPointArguments":  [
-                                                                                     "--dataset",
-                                                                                     "wine",
-                                                                                     "--input",
-                                                                                     "s3://mlops-inference-platform-864981752170/emr-demo/input/wine/",
-                                                                                     "--output",
-                                                                                     "s3://mlops-inference-platform-864981752170/emr-demo/output/wine/",
-                                                                                     "--metrics-file",
-                                                                                     "s3://mlops-inference-platform-864981752170/emr-demo/output/wine/_metrics.json"
-                                                                                 ],
-                                                         "sparkSubmitParameters":  "--py-files s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs.zip --conf spark.executor.cores=2 --conf spark.executor.memory=4g --conf spark.driver.cores=2 --conf spark.driver.memory=4g"
-                                                     }
-                                 },
-                   "tags":  {
-
-                            },
-                   "totalResourceUtilization":  {
-                                                    "vCPUHour":  0.007,
-                                                    "memoryGBHour":  0.018,
-                                                    "storageGBHour":  0.072
-                                                },
-                   "totalExecutionDurationSeconds":  12,
-                   "executionTimeoutMinutes":  720,
-                   "billedResourceUtilization":  {
-                                                     "vCPUHour":  0.033,
-                                                     "memoryGBHour":  0.083,
-                                                     "storageGBHour":  0.0
-                                                 },
-                   "mode":  "BATCH",
-                   "attempt":  1,
-                   "attemptCreatedAt":  "2026-07-02T19:52:56.457000+05:30",
-                   "attemptUpdatedAt":  "2026-07-02T19:54:05.930000+05:30",
-                   "startedAt":  "2026-07-02T19:53:53.887000+05:30",
-                   "endedAt":  "2026-07-02T19:54:05.930000+05:30"
-               }
+    "jobRun": {
+        "applicationId": "00g6ti26amk2al0p",
+        "jobRunId": "00g6tjkq9nrmm80r",
+        "name": "wine-etl-demo",
+        "arn": "arn:aws:emr-serverless:eu-west-1:864981752170:/applications/00g6ti26amk2al0p/jobruns/00g6tjkq9nrmm80r",
+        "createdBy": "arn:aws:iam::864981752170:user/rascal-vertex",
+        "createdAt": "2026-07-02T23:13:55.519000+05:30",
+        "updatedAt": "2026-07-02T23:15:40.151000+05:30",
+        "executionRole": "arn:aws:iam::864981752170:role/EMRServerlessWineDemoRole",
+        "state": "SUCCESS",
+        "stateDetails": "",
+        "releaseLabel": "emr-7.0.0",
+        "configurationOverrides": {
+            "monitoringConfiguration": {
+                "managedPersistenceMonitoringConfiguration": {
+                    "enabled": true
+                }
+            }
+        },
+        "jobDriver": {
+            "sparkSubmit": {
+                "entryPoint": "s3://mlops-inference-platform-864981752170/emr-demo/spark_jobs/transform.py",
+                "entryPointArguments": [
+                    "--dataset",
+                    "wine",
+                    "--input",
+                    "s3a://mlops-inference-platform-864981752170/emr-demo/input/wine/",
+                    "--output",
+                    "s3a://mlops-inference-platform-864981752170/emr-demo/output/wine/",
+                    "--metrics-file",
+                    "/tmp/wine_emr_metrics.json"
+                ],
+                "sparkSubmitParameters": "--py-files s3://mlops-inference-platform-864981752170/emr-demo/helpers_pkg.zip --conf spark.hadoop.fs.s3a.endpoint.region=eu-west-1 --conf spark.hadoop.fs.s3a.endpoint=s3.eu-west-1.amazonaws.com --conf spark.executor.cores=2 --conf spark.executor.memory=4g --conf spark.driver.cores=2 --conf spark.driver.memory=4g"
+            }
+        },
+        "tags": {},
+        "totalResourceUtilization": {
+            "vCPUHour": 0.077,
+            "memoryGBHour": 0.193,
+            "storageGBHour": 0.772
+        },
+        "totalExecutionDurationSeconds": 42,
+        "executionTimeoutMinutes": 720,
+        "billedResourceUtilization": {
+            "vCPUHour": 0.133,
+            "memoryGBHour": 0.333,
+            "storageGBHour": 0.0
+        },
+        "mode": "BATCH",
+        "attempt": 1,
+        "attemptCreatedAt": "2026-07-02T23:13:55.519000+05:30",
+        "attemptUpdatedAt": "2026-07-02T23:15:40.151000+05:30",
+        "startedAt": "2026-07-02T23:14:57.651000+05:30",
+        "endedAt": "2026-07-02T23:15:40.151000+05:30"
+    }
 }

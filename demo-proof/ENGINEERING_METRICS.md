@@ -1,6 +1,6 @@
 # Engineering Metrics — Projects 1 & 2 (Measured)
 
-> **Last measured:** 2026-07-01 (local Windows + AWS ECS Fargate eu-west-1).  
+> **Last measured:** 2026-07-02 (local Windows + AWS eu-west-1: ECS, EKS, EMR Serverless, SageMaker polish run).  
 > Use these numbers on your resume. Re-run scripts to refresh.
 
 ---
@@ -9,13 +9,13 @@
 
 | Metric | **Local** | **ECS Fargate (eu-west-1)** | How to reproduce |
 |--------|-----------|----------------------------|------------------|
-| **p95 latency** | **4.94 ms** | **332.88 ms** | `scripts/benchmark_api.py` / `scripts/ecs/capture_ecs_proof.ps1` |
+| **p95 latency** | **4.94 ms** | **337.86 ms** | `scripts/benchmark_api.py` / `scripts/ecs/capture_ecs_proof.ps1` |
 | **p50 latency** | 3.8 ms | — | local benchmark |
-| **Mean latency** | 3.93 ms | 329.85 ms | same |
+| **Mean latency** | 3.93 ms | 330.23 ms | same |
 | **Throughput** | **254.5 req/s** | **3.0 req/s** | 200 local / 100 ECS sequential requests |
 | **Training samples** | **6,497** | same model | UCI wine (red + white) |
-| **Model accuracy** | ~66% | same | MLflow `wine-quality` experiment |
-| **F1 macro** | ~0.37 | same | MLflow metrics |
+| **Model accuracy** | **81.2%** | same | `models/model_metadata.json` / MLflow |
+| **F1 macro** | **0.68** | same | MLflow metrics |
 | **Inference** | FastAPI `/predict` | public IP :8000 | see `demo-proof/ecs/DEPLOYMENT.md` |
 | **AWS region** | eu-west-1 (Ireland) | eu-west-1 | `aws configure get region` |
 | **S3 storage** | ~12 MB artifacts | preserved | `s3://mlops-inference-platform-864981752170/` |
@@ -33,14 +33,16 @@
 | GHCR image | `ghcr.io/marcelinobrgnz/portfolio-wine-api:latest` |
 | ECR image | `864981752170.dkr.ecr.eu-west-1.amazonaws.com/portfolio-wine-api:latest` |
 | ECS Fargate demo | Completed and torn down (proof in `demo-proof/ecs/`) |
+| EKS demo | Completed and torn down (proof in `demo-proof/eks/`) |
+| SageMaker endpoint | BYOC attempted; endpoint failed (entrypoint fix in repo) — see `AWS_POLISH_RUN_METRICS.md` |
 | S3 artifacts | model, data, drift reports |
 
-### Skipped (budget)
+### Skipped (budget / local only)
 
 | Item | Status |
 |------|--------|
-| SageMaker endpoint | Skipped (~$50+/mo) |
-| minikube live deploy | Manifest ready; needs Docker Desktop |
+| minikube live deploy | EKS used as k8s cloud proof instead |
+| MWAA | ECS Airflow used (~$0.05/hr snap-deploy) |
 
 ---
 
@@ -48,7 +50,7 @@
 
 | Metric | **Value** | Source |
 |--------|-----------|--------|
-| **Wine rows processed** | ~6,400+ | Spark ETL after outlier filter |
+| **Wine rows processed** | **6,497** | EMR Serverless SUCCESS + UCI source CSVs |
 | **Taxi raw trips** | **2,826,368** | TLC Jan 2023 Parquet |
 | **Taxi raw data size** | **~47 MB** compressed Parquet | `download_nyc_taxi.py` |
 | **Taxi rows after ETL** | ~2.5M+ (expected) | Spark fare/distance filters |
@@ -69,7 +71,7 @@
 |------|--------|---------|
 | Airflow UI screenshot | Captured | `demo-proof/project2/03_airflow_login_full.png`, `04_airflow_dags_full.png`, `05_airflow_dag_graph_full.png` |
 | Spark UI screenshot | Captured | `demo-proof/project2/02_spark_master_ui_full.png` |
-| EMR Serverless run | Not run | Option B ($3–8), skipped for budget |
+| EMR Serverless run | **SUCCESS** (2026-07-02 polish) | `demo-proof/emr-serverless/` — job `00g6tjkq9nrmm80r` |
 | End-to-end DAG manual trigger | Not run | Needs `docker compose up` |
 
 ---

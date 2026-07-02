@@ -1,6 +1,6 @@
 ﻿{
-    "applicationId":  "00g6tf3ffgbh4u0p",
-    "tornDownAtUtc":  "2026-07-02T14:27:02.2398759Z",
+    "applicationId":  "00g6ti26amk2al0p",
+    "tornDownAtUtc":  "2026-07-02T18:32:12.1434536Z",
     "preserved":  [
                       "s3://mlops-inference-platform-864981752170/emr-demo/"
                   ]
