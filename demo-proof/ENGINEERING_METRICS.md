@@ -1,38 +1,46 @@
 # Engineering Metrics — Projects 1 & 2 (Measured)
 
-> **Last measured:** 2026-07-01 on local Windows machine.  
+> **Last measured:** 2026-07-01 (local Windows + AWS ECS Fargate eu-west-1).  
 > Use these numbers on your resume. Re-run scripts to refresh.
 
 ---
 
 ## Project 1 — MLOps Inference Platform
 
-| Metric | **Measured value** | How to reproduce |
-|--------|-------------------|------------------|
-| **p95 latency** | **4.94 ms** | `python scripts/benchmark_api.py` (API on :8000) |
-| **p50 latency** | 3.8 ms | same |
-| **Mean latency** | 3.93 ms | same |
-| **Throughput** | **254.5 req/s** | same, 200 sequential requests |
-| **Training samples** | **6,497** | UCI wine (red + white) |
-| **Model accuracy** | ~66% | MLflow `wine-quality` experiment |
-| **F1 macro** | ~0.37 | MLflow metrics |
-| **Inference batch size** | 1 request (REST) | FastAPI `/predict` |
-| **AWS region** | eu-west-1 (Ireland) | `aws configure get region` |
-| **S3 storage** | ~12 MB artifacts | `aws s3 ls --recursive s3://mlops-inference-platform-864981752170/` |
-| **Monthly AWS cost** | **<$2** | S3-only at demo scale (no SageMaker/ECS always-on) |
+| Metric | **Local** | **ECS Fargate (eu-west-1)** | How to reproduce |
+|--------|-----------|----------------------------|------------------|
+| **p95 latency** | **4.94 ms** | **332.88 ms** | `scripts/benchmark_api.py` / `scripts/ecs/capture_ecs_proof.ps1` |
+| **p50 latency** | 3.8 ms | — | local benchmark |
+| **Mean latency** | 3.93 ms | 329.85 ms | same |
+| **Throughput** | **254.5 req/s** | **3.0 req/s** | 200 local / 100 ECS sequential requests |
+| **Training samples** | **6,497** | same model | UCI wine (red + white) |
+| **Model accuracy** | ~66% | same | MLflow `wine-quality` experiment |
+| **F1 macro** | ~0.37 | same | MLflow metrics |
+| **Inference** | FastAPI `/predict` | public IP :8000 | see `demo-proof/ecs/DEPLOYMENT.md` |
+| **AWS region** | eu-west-1 (Ireland) | eu-west-1 | `aws configure get region` |
+| **S3 storage** | ~12 MB artifacts | preserved | `s3://mlops-inference-platform-864981752170/` |
+| **ECS demo cost** | — | **~$0.05–0.15 / hr** | 0.25 vCPU Fargate + data transfer; auto-teardown after 1h |
 
 ### Resume deployment bullet (copy-paste)
 
-> Served XGBoost wine-quality classifier via FastAPI on Docker with **p95 latency 4.9 ms** and **255 req/s** throughput (local benchmark, 6.5k training samples); MLflow tracking, Evidently drift monitoring, and S3 artifact store in **eu-west-1**.
+> Served XGBoost wine-quality classifier via FastAPI on Docker/ECS Fargate with **p95 4.9 ms** locally and **333 ms** on AWS (network-bound); MLflow tracking, Evidently drift monitoring, GHCR + ECR image pipeline, S3 artifacts in **eu-west-1**.
 
-### NOT deployed (honest)
+### Deployed (measured)
 
 | Item | Status |
 |------|--------|
-| SageMaker endpoint | Not provisioned (would add ~$50+/mo) |
-| ECS Fargate always-on | Not running |
-| GitHub push / GHCR | Repos staged, not pushed |
-| minikube live deploy | Manifest only |
+| GitHub / CI | [marcelinobrgnz/Portfolio](https://github.com/marcelinobrgnz/Portfolio) — green |
+| GHCR image | `ghcr.io/marcelinobrgnz/portfolio-wine-api:latest` |
+| ECR image | `864981752170.dkr.ecr.eu-west-1.amazonaws.com/portfolio-wine-api:latest` |
+| ECS Fargate demo | Completed and torn down (proof in `demo-proof/ecs/`) |
+| S3 artifacts | model, data, drift reports |
+
+### Skipped (budget)
+
+| Item | Status |
+|------|--------|
+| SageMaker endpoint | Skipped (~$50+/mo) |
+| minikube live deploy | Manifest ready; needs Docker Desktop |
 
 ---
 
@@ -55,43 +63,74 @@
 
 > Built Airflow + PySpark batch pipeline processing **6.4k** wine samples (P1 feature store) and **2.8M** NYC taxi trips (**47 MB** raw Parquet) into partitioned S3 Parquet (eu-west-1), with row-count validation gates and automated MLflow retraining trigger.
 
-### NOT demonstrated live (honest)
+### Not demonstrated live
 
 | Item | Status | Blocker |
 |------|--------|---------|
-| Airflow UI screenshot | Not captured | **Docker not installed** on this machine |
-| Spark UI screenshot | Not captured | Docker not installed |
+| Airflow UI screenshot | Captured | `demo-proof/project2/03_airflow_login_full.png`, `04_airflow_dags_full.png`, `05_airflow_dag_graph_full.png` |
+| Spark UI screenshot | Captured | `demo-proof/project2/02_spark_master_ui_full.png` |
 | EMR Serverless run | Not run | Option B ($3–8), skipped for budget |
 | End-to-end DAG manual trigger | Not run | Needs `docker compose up` |
-| GitHub push | Not done | Repos initialized, not committed/pushed |
 
 ---
 
 ## Proof artifacts
 
 ```
-D:\IIMA\demo-proof\
+D:\IIMA\Portfolio\demo-proof\
 ├── VERIFICATION.txt
+├── ENGINEERING_METRICS.md
 ├── project1\
-│   ├── benchmark_results.json      ← measured latency/throughput
-│   ├── 01_fastapi_swagger.png
-│   ├── p1_health.png
-│   ├── p1_mlflow_home.png
-│   └── p1_mlflow_wine_quality_runs.png
-└── project2\
-    └── pytest_output.txt
+│   ├── benchmark_results.json      ← local latency/throughput
+│   ├── 01_fastapi_swagger_full.png
+│   ├── 02_health_full.png
+│   ├── 03_mlflow_home_full.png
+│   ├── 04_mlflow_experiments_full.png
+│   └── 05_drift_report_full.png
+├── project2\
+│   ├── pytest_output.txt
+│   ├── p2_status_dashboard.html
+│   ├── 01_status_dashboard_full.png
+│   └── 02_spark_master_ui_full.png
+└── ecs\                            ← AWS Fargate demo (2026-07-01)
+    ├── DEPLOYMENT.md
+    ├── ecs_state.json
+    ├── ecs_benchmark_results.json
+    ├── health_response.json
+    ├── predict_response.json
+    ├── ecs_task_describe.json
+    ├── 01_ecs_health.png
+    └── 02_ecs_fastapi_swagger.png
 ```
 
 ---
 
-## What to run for full P2 demo screenshots
+## Auto-teardown (1 hour)
 
 ```powershell
-# Requires Docker Desktop
-cd D:\IIMA\spark-orchestrated-ml-pipeline
+# Deploy (creates cluster, task, saves state)
+.\scripts\ecs\deploy_ecs_demo.ps1
+
+# Capture metrics + screenshots
+.\scripts\ecs\capture_ecs_proof.ps1
+
+# Background: wait 1h from deployedAtUtc, then tear down ECS/ECR/logs (S3 kept)
+Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File D:\IIMA\Portfolio\scripts\ecs\schedule_teardown_1hour.ps1' -WindowStyle Hidden
+
+# Manual immediate teardown
+.\scripts\ecs\teardown_all_aws_demo.ps1
+```
+
+---
+
+## P2 full demo (when Docker is installed)
+
+```powershell
+# Run as Administrator once:
+C:\Users\Marcelino\AppData\Local\Temp\DockerDesktopInstaller.exe install --quiet --accept-license
+
+cd D:\IIMA\Portfolio\spark-orchestrated-ml-pipeline
 docker compose up --build -d
 # Airflow: http://localhost:8081 (admin/admin)
 # Spark:   http://localhost:8080
 ```
-
-Then trigger `wine_feature_pipeline` DAG and screenshot the graph + task logs.

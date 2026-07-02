@@ -1,0 +1,9 @@
+{
+    "throughput_rps":  3,
+    "environment":  "AWS ECS Fargate eu-west-1",
+    "latency_ms_max":  346.28,
+    "latency_ms_p95":  332.88,
+    "latency_ms_mean":  329.85,
+    "requests":  100,
+    "apiUrl":  "http://54.76.246.14:8000"
+}

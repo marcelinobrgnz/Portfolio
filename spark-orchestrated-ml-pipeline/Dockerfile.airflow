@@ -20,8 +20,8 @@ ENV PATH="${SPARK_HOME}/bin:${PATH}"
 
 USER airflow
 COPY requirements-p1-trigger.txt /tmp/requirements-p1-trigger.txt
-RUN pip install --no-cache-dir \
-    -r /tmp/requirements-p1-trigger.txt \
-    apache-airflow-providers-apache-spark==4.11.2 \
-    pyspark==3.5.4 \
-    boto3==1.35.71
+ENV PIP_DEFAULT_TIMEOUT=600 PIP_RETRIES=10
+RUN pip install --no-cache-dir boto3==1.35.71 && \
+    pip install --no-cache-dir pyspark==3.5.4 && \
+    pip install --no-cache-dir apache-airflow-providers-apache-spark==4.11.2 && \
+    pip install --no-cache-dir -r /tmp/requirements-p1-trigger.txt

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><title>Project 2 — Spark + Airflow Pipeline</title>
+<html><head><meta charset="UTF-8"><title>Project 2 — Spark + Airflow Pipeline</title>
 <style>body{font-family:system-ui;max-width:900px;margin:40px auto;padding:20px;background:#0f172a;color:#e2e8f0}
 h1{color:#38bdf8}table{border-collapse:collapse;width:100%}td,th{border:1px solid #334155;padding:8px}th{background:#1e293b}
 .ok{color:#4ade80}.pending{color:#fbbf24}</style></head>
@@ -15,7 +15,8 @@ h1{color:#38bdf8}table{border-collapse:collapse;width:100%}td,th{border:1px soli
 <tr><td>docker-compose (Airflow + Spark)</td><td class="ok">✓ Configured</td></tr>
 <tr><td>pytest</td><td class="ok">✓ 7 passed, 1 skipped</td></tr>
 <tr><td>P1 integration (trigger_p1_train.sh)</td><td class="ok">✓ Wired</td></tr>
-<tr><td>Live Airflow UI demo</td><td class="pending">⚠ Needs Docker Desktop</td></tr>
+<tr><td>Spark Master UI (localhost:8080)</td><td class="ok">✓ Live — 1 worker, ALIVE</td></tr>
+<tr><td>Live Airflow UI (AWS ECS demo)</td><td class="ok">✓ Captured (login, DAG list, graph)</td></tr>
 </table>
 <h2>Engineering Metrics</h2>
 <table>

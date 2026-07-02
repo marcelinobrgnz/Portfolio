@@ -5,8 +5,24 @@ P1 benchmark (200 requests, local FastAPI):
   p95 latency: 4.94 ms
   throughput: 254.5 req/s
 
+P1 benchmark (100 requests, ECS Fargate eu-west-1):
+  API: http://54.76.246.14:8000
+  p95 latency: 332.88 ms
+  throughput: 3.0 req/s
+  health: ok, model_loaded=true
+  predict: returned class 0
+
+ECS deploy (2026-07-01T13:57:58Z UTC):
+  cluster: portfolio-wine-demo
+  task: arn:aws:ecs:eu-west-1:864981752170:task/portfolio-wine-demo/881cfc3b354e4b898ea422c014ca911a
+  auto-teardown scheduled: 2026-07-01T14:57:58Z UTC
+
 S3 artifacts verified in eu-west-1:
   models/wine_quality_model.pkl
   models/model.joblib
   data/wine_quality_combined.csv
   drift-reports/*.html
+
+Skipped or pending: SageMaker (budget), minikube live deploy (cluster start in progress)
+
+P2 wine_feature_pipeline DAG graph: demo-proof/project2/06_wine_feature_pipeline_dag_graph_full.png

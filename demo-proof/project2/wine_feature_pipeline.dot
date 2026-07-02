@@ -1,0 +1,12 @@
+digraph wine_feature_pipeline {
+	graph [label=wine_feature_pipeline labelloc=t rankdir=LR]
+	ingest_raw_wine [color="#000000" fillcolor="#ffefeb" label=ingest_raw_wine shape=rectangle style="filled,rounded"]
+	spark_transform_wine [color="#000000" fillcolor="#ffefeb" label=spark_transform_wine shape=rectangle style="filled,rounded"]
+	validate_row_counts [color="#000000" fillcolor="#ffefeb" label=validate_row_counts shape=rectangle style="filled,rounded"]
+	sync_features_to_s3 [color="#000000" fillcolor="#ffefeb" label=sync_features_to_s3 shape=rectangle style="filled,rounded"]
+	trigger_p1_retrain [color="#000000" fillcolor="#ffefeb" label=trigger_p1_retrain shape=rectangle style="filled,rounded"]
+	ingest_raw_wine -> spark_transform_wine
+	spark_transform_wine -> validate_row_counts
+	validate_row_counts -> sync_features_to_s3
+	sync_features_to_s3 -> trigger_p1_retrain
+}

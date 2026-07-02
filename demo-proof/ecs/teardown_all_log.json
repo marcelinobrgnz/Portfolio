@@ -1,0 +1,15 @@
+{
+    "region":  "eu-west-1",
+    "preserved":  [
+                      "s3://mlops-inference-platform-864981752170"
+                  ],
+    "removed":  [
+                    "ecs cluster",
+                    "fargate task",
+                    "security group",
+                    "task definitions",
+                    "ecr repo",
+                    "log group"
+                ],
+    "tornDownAtUtc":  "2026-07-01T18:30:59.9992235Z"
+}

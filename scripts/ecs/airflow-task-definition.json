@@ -1,0 +1,32 @@
+{
+  "family": "airflow-ui-demo",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::864981752170:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "airflow",
+      "image": "apache/airflow:2.10.4-python3.11",
+      "essential": true,
+      "portMappings": [
+        {"containerPort": 8080, "hostPort": 8080, "protocol": "tcp"}
+      ],
+      "environment": [
+        {"name": "AIRFLOW__CORE__LOAD_EXAMPLES", "value": "True"},
+        {"name": "AIRFLOW__CORE__EXECUTOR", "value": "SequentialExecutor"},
+        {"name": "AIRFLOW__DATABASE__SQL_ALCHEMY_CONN", "value": "sqlite:////opt/airflow/airflow.db"}
+      ],
+      "command": ["bash", "-lc", "airflow db migrate && airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com || true; airflow scheduler & exec airflow webserver"],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/airflow-ui-demo",
+          "awslogs-region": "eu-west-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
