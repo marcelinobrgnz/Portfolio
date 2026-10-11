@@ -1,7 +1,10 @@
 ﻿{
     "endpoint":  "wine-quality-demo-ep",
-    "tornDownAtUtc":  "2026-07-02T19:14:13.8788589Z",
     "preserved":  [
-                      "s3://mlops-inference-platform-864981752170/sagemaker/"
-                  ]
+                      "s3://mlops-inference-platform-864981752170/sagemaker/",
+                      "s3://mlops-inference-platform-864981752170/codebuild/"
+                  ],
+    "ecrRepo":  "portfolio-wine-sagemaker",
+    "tornDownAtUtc":  "2026-07-03T05:53:37.9210675Z",
+    "codebuildProject":  "portfolio-sagemaker-build"
 }

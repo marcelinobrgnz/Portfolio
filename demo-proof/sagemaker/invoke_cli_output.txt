@@ -1,0 +1,15 @@
+aws : 
+At C:\Users\Marcelino\AppData\Local\Temp\ps-script-c817757b-7a62-40ea-9d74-7bfe7dbef7e0.ps1:94 char:1
++ aws sagemaker-runtime invoke-endpoint --endpoint-name wine-quality-de ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+An error occurred (ModelError) when calling the InvokeEndpoint operation: Received client error (400) from primary 
+with message "<!doctype html>
+<html lang=en>
+<title>400 Bad Request</title>
+<h1>Bad Request</h1>
+<p>The browser (or proxy) sent a request that this server could not understand.</p>
+". See https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#logEventViewer:group=/aws/sagemaker/En
+dpoints/wine-quality-demo-ep in account 864981752170 for more information.

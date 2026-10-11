@@ -28,11 +28,8 @@ if (-not (Test-Path $crane)) {
 aws ecr get-login-password --region $Region | & $crane auth login "${AccountId}.dkr.ecr.${Region}.amazonaws.com" -u AWS --password-stdin 2>$null
 & $crane copy $GhcrImage $EcrImage 2>&1 | Tee-Object "$ProofDir\crane_copy.log"
 if ($LASTEXITCODE -ne 0) {
-  Write-Host "crane failed - docker build + push"
-  docker build -f "D:\IIMA\Portfolio\mlops-inference-platform\Dockerfile.api" -t $EcrImage "D:\IIMA\Portfolio\mlops-inference-platform"
-  if ($LASTEXITCODE -ne 0) { exit 1 }
-  docker push $EcrImage
-  if ($LASTEXITCODE -ne 0) { exit 1 }
+  Write-Host "crane copy failed. Ensure GHCR image exists (merge to main for CI) or: gh auth login"
+  exit 1
 }
 @{ status = "pushed"; image = $EcrImage; atUtc = (Get-Date).ToUniversalTime().ToString("o") } | ConvertTo-Json | Set-Content "$ProofDir\ecr_status.json"
 Write-Host "ECR ready: $EcrImage"

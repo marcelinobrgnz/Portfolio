@@ -6,4 +6,10 @@ __pycache__/
 .venv/
 .env
 
+# Local-only (LinkedIn / audit helpers — not for GitHub)
+LINKEDIN_SKILLS_EXTRACT.txt
+LINKEDIN_SKILLS_MASTER.md
+_github_readme_remote.txt
+demo-proof/ecs-airflow/cookies.txt
+
 # Per-project ignores apply inside subfolders

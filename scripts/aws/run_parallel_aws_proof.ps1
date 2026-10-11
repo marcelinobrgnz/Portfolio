@@ -18,7 +18,7 @@ function Start-Track($name, $script) {
 
 # Phase 1 — all independent tracks in parallel
 $jobs += Start-Track "ecr" "$Root\scripts\aws\ensure_ecr_image.ps1"
-$jobs += Start-Track "sagemaker" "$Root\scripts\aws\deploy_sagemaker_demo.ps1"
+$jobs += Start-Track "sagemaker" "$Root\scripts\aws\deploy_sagemaker_aws.ps1"
 $jobs += Start-Track "emr" "$Root\scripts\aws\deploy_emr_serverless_demo.ps1"
 $jobs += Start-Track "airflow-ecs" "$Root\scripts\ecs\deploy_airflow_ecs.ps1"
 $jobs += Start-Track "eks" "$Root\scripts\aws\deploy_eks_demo.ps1"

@@ -1,0 +1,48 @@
+2026-07-03T11:09:45.3371519+05:30 ==> SageMaker IAM execution role
+2026-07-03T11:09:48.0561381+05:30 ==> Package model artifact to S3
+2026-07-03T11:09:53.6304263+05:30 ==> CodeBuild IAM role
+2026-07-03T11:10:14.7191449+05:30 ==> Upload CodeBuild source to S3
+2026-07-03T11:10:20.0790412+05:30 ==> Create/update CodeBuild project
+2026-07-03T11:10:26.0838726+05:30 ==> Start CodeBuild (build + push BYOC image)
+2026-07-03T11:10:28.0401266+05:30 Build ID: portfolio-sagemaker-build:43c99139-1c6f-451d-abb3-34cf36646081
+2026-07-03T11:10:50.0279659+05:30   build: FAILED / COMPLETED
+2026-07-03T11:11:20.8235627+05:30 ==> SageMaker IAM execution role
+2026-07-03T11:11:23.0098594+05:30 ==> Package model artifact to S3
+2026-07-03T11:11:26.4895825+05:30 ==> CodeBuild IAM role
+2026-07-03T11:11:28.6207290+05:30 ==> Upload CodeBuild source to S3
+2026-07-03T11:11:32.4909025+05:30 ==> Create/update CodeBuild project
+2026-07-03T11:11:38.2329945+05:30 ==> Start CodeBuild (build + push BYOC image)
+2026-07-03T11:11:40.1382952+05:30 Build ID: portfolio-sagemaker-build:f720c96a-d368-4ed8-83a7-0996211d8632
+2026-07-03T11:12:02.1098073+05:30   build: IN_PROGRESS / COMPLETED
+2026-07-03T11:12:24.0376062+05:30   build: FAILED / COMPLETED
+2026-07-03T11:13:13.5657420+05:30 ==> SageMaker IAM execution role
+2026-07-03T11:13:15.8962414+05:30 ==> Package model artifact to S3
+2026-07-03T11:13:19.4432076+05:30 ==> CodeBuild IAM role
+2026-07-03T11:13:23.9156820+05:30 ==> Ensure ECR repository exists
+2026-07-03T11:13:31.6665611+05:30 ==> Create/update CodeBuild project
+2026-07-03T11:13:37.5938451+05:30 ==> Start CodeBuild (build + push BYOC image)
+2026-07-03T11:13:39.5677061+05:30 Build ID: portfolio-sagemaker-build:1822a236-6266-4a1a-aab2-d21c1bfd4691
+2026-07-03T11:14:01.4595039+05:30   build: IN_PROGRESS / PRE_BUILD
+2026-07-03T11:14:23.3009470+05:30   build: FAILED / COMPLETED
+2026-07-03T11:16:20.5173073+05:30 ==> SageMaker IAM execution role
+2026-07-03T11:16:23.9286450+05:30 ==> Package model artifact to S3
+2026-07-03T11:16:27.8336162+05:30 ==> CodeBuild IAM role
+2026-07-03T11:16:32.1469016+05:30 ==> Ensure ECR repository exists
+2026-07-03T11:16:34.0433879+05:30 ==> Upload CodeBuild source to S3 (flat context)
+2026-07-03T11:16:38.1188088+05:30 ==> Create/update CodeBuild project
+2026-07-03T11:16:43.8931694+05:30 ==> Start CodeBuild (build + push BYOC image)
+2026-07-03T11:16:45.9105479+05:30 Build ID: portfolio-sagemaker-build:e626f2ea-d6c9-4d08-bf7a-00b2b2da082d
+2026-07-03T11:17:07.7336929+05:30   build: IN_PROGRESS / BUILD
+2026-07-03T11:17:29.5543100+05:30   build: IN_PROGRESS / BUILD
+2026-07-03T11:17:51.4014565+05:30   build: IN_PROGRESS / POST_BUILD
+2026-07-03T11:18:13.2717113+05:30   build: IN_PROGRESS / POST_BUILD
+2026-07-03T11:18:35.1057130+05:30   build: IN_PROGRESS / COMPLETED
+2026-07-03T11:18:56.9399451+05:30   build: SUCCEEDED / COMPLETED
+2026-07-03T11:18:56.9535101+05:30 ==> Create SageMaker model (BYOC)
+2026-07-03T11:19:01.3788850+05:30 ==> Create endpoint (ml.t2.medium)
+2026-07-03T11:19:09.8207718+05:30 Waiting for InService...
+2026-07-03T11:19:41.7026514+05:30   endpoint: Creating
+2026-07-03T11:20:13.7990612+05:30   endpoint: Creating
+2026-07-03T11:20:45.7643845+05:30   endpoint: Creating
+2026-07-03T11:21:17.9551468+05:30   endpoint: InService
+2026-07-03T11:21:22.6438584+05:30 SageMaker SUCCESS: invoke captured

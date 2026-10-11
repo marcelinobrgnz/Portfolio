@@ -1,0 +1,7 @@
+FROM apache/airflow:2.10.4-python3.11
+USER root
+COPY wine_feature_pipeline_dag.py taxi_etl_dag.py /opt/airflow/dags/
+USER airflow
+ENV AIRFLOW__CORE__LOAD_EXAMPLES=False
+ENV AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+ENV AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db

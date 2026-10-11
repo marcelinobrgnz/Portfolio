@@ -13,7 +13,7 @@ $emrJob = Start-Job -Name emr -ScriptBlock {
 
 # SageMaker in background
 $sgJob = Start-Job -Name sagemaker -ScriptBlock {
-  & powershell -NoProfile -ExecutionPolicy Bypass -File "D:\IIMA\Portfolio\scripts\aws\deploy_sagemaker_demo.ps1"
+  & powershell -NoProfile -ExecutionPolicy Bypass -File "D:\IIMA\Portfolio\scripts\aws\deploy_sagemaker_aws.ps1"
 }
 
 Write-Host "Waiting for EMR + SageMaker (parallel)..."

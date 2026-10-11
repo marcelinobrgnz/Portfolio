@@ -1,0 +1,36 @@
+Final force teardown — 2026-07-02T19:22Z UTC
+Region: eu-west-1 | Account: 864981752170
+
+ACTIONS TAKEN:
+- Full teardown_all_now.ps1 (ECS wine + Airflow, SageMaker, EMR, EKS, ECR, CloudWatch)
+- Stopped stray ECS task on portfolio-wine-demo before cluster delete
+- Force-deleted SageMaker wine-quality-demo model/config/endpoint (already gone)
+- Force-deleted ECR portfolio repos (already gone)
+- Force-deleted EMR Serverless apps (already gone)
+- Attempted SG cleanup sg-0f419c2bda6f55312, sg-0a166807e18b5042f (already gone)
+
+COMPREHENSIVE SCAN (eu-west-1 + us-east-1 + eu-central-1):
+- ECS clusters/tasks: CLEAR
+- EKS clusters: CLEAR
+- EMR Serverless: CLEAR
+- SageMaker endpoints (all statuses): CLEAR
+- ECR repositories: CLEAR
+- MWAA: CLEAR
+- EC2 instances (non-terminated): CLEAR
+- NAT gateways: CLEAR
+- Unassociated EIPs: CLEAR
+- Load balancers: CLEAR
+- Auto Scaling Groups: CLEAR
+- RDS: CLEAR
+- Orphan EBS volumes: CLEAR
+- Portfolio security groups: CLEAR
+- CloudFormation portfolio/eksctl stacks: CLEAR
+
+UNRELATED ACCOUNT RESOURCES (not portfolio demo — left untouched):
+- SageMaker notebooks: videopreprocessing (Stopped, ml.g4dn.xlarge)
+- SageMaker notebooks: record2transcribe (Stopped, ml.g4dn.xlarge)
+
+ONGOING COST (expected):
+- S3 bucket mlops-inference-platform-864981752170 only (~<$2/mo storage)
+
+RESULT: No active portfolio demo compute billing.

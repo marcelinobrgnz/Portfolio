@@ -5,7 +5,7 @@
 | Layer | Tool |
 |-------|------|
 | Orchestration | Apache Airflow 2.10 (weekly wine / monthly taxi DAGs) |
-| Compute | PySpark 3.5 on Bitnami Spark (local cluster via Docker Compose) |
+| Compute | PySpark 3.5 (`local[*]` or EMR Serverless on AWS) |
 | Feature store | Parquet partitions on local disk + `s3://…/features/` |
 | Downstream ML | Triggers **Project 1** `src.train` via MLflow after wine ETL |
 | Volume demo | NYC Yellow Taxi Jan 2023 (~**2.8M trips**, ~**47 MB** raw Parquet) |
@@ -43,8 +43,6 @@ spark-orchestrated-ml-pipeline/
 │   ├── setup_s3.sh
 │   └── submit_spark_slurm.sh          # Option C HPC template
 ├── tests/
-├── docker-compose.yml                 # Airflow + Spark master/worker
-├── Dockerfile.airflow
 └── .github/workflows/ci.yml
 ```
 
@@ -52,7 +50,7 @@ spark-orchestrated-ml-pipeline/
 
 ### 1. Prerequisites
 
-- Docker Desktop (8 GB+ RAM recommended)
+- Python 3.11 + Java 17 (for local PySpark tests)
 - AWS CLI configured (`eu-west-1`) — same credentials as P1
 - Project 1 cloned at `../mlops-inference-platform`
 
@@ -88,15 +86,15 @@ spark-submit --master local[*] spark_jobs/transform.py ^
 bash scripts/trigger_p1_train.sh data/features/wine
 ```
 
-### 6. Full stack (Airflow + Spark)
+### 6. Airflow + Spark on AWS (no local Docker)
 
-```bash
-docker compose up --build -d
-# Airflow UI: http://localhost:8081  (admin / admin)
-# Spark UI:  http://localhost:8080
+```powershell
+.\scripts\ecs\deploy_airflow_e2e_aws.ps1
+# Proof in demo-proof/ecs-airflow/; then:
+.\scripts\ecs\teardown_airflow_e2e_aws.ps1
 ```
 
-Unpause DAGs `wine_feature_pipeline` and `taxi_etl_pipeline` in the UI, then trigger manually.
+For EMR Serverless Spark: `.\scripts\aws\deploy_emr_serverless_demo.ps1`
 
 ### 7. Tests
 
@@ -116,7 +114,7 @@ bash scripts/setup_s3.sh
 | `s3://…/features/taxi/` | NYC taxi features (~2.5M+ rows after cleaning) |
 | `s3://…/pipeline-metrics/` | Optional JSON job stats |
 
-**Combined P1+P2 cost:** **$0** local Docker + **<$2/month** S3 at demo scale (well under $10 cap).
+**Combined P1+P2 cost:** **$0** local compute + **<$2/month** S3 at demo scale (well under $10 cap).
 
 ## Engineering metrics (measured)
 

@@ -1,0 +1,98 @@
+﻿{
+  "dags": [
+    {
+      "dag_display_name": "taxi_etl_pipeline",
+      "dag_id": "taxi_etl_pipeline",
+      "default_view": "grid",
+      "description": "NYC Taxi PySpark ETL \u2192 partitioned Parquet on S3 (~2.8M trips/month)",
+      "file_token": "Ii9vcHQvYWlyZmxvdy9kYWdzL3RheGlfZXRsX2RhZy5weSI.G6M0DhVYC6-fGcjfCq3zCh_Rt1g",
+      "fileloc": "/opt/airflow/dags/taxi_etl_dag.py",
+      "has_import_errors": false,
+      "has_task_concurrency_limits": false,
+      "is_active": true,
+      "is_paused": true,
+      "is_subdag": false,
+      "last_expired": null,
+      "last_parsed_time": "2026-07-03T07:05:02.689214+00:00",
+      "last_pickled": null,
+      "max_active_runs": 16,
+      "max_active_tasks": 16,
+      "max_consecutive_failed_dag_runs": 0,
+      "next_dagrun": "2026-06-01T00:00:00+00:00",
+      "next_dagrun_create_after": "2026-07-01T00:00:00+00:00",
+      "next_dagrun_data_interval_end": "2026-07-01T00:00:00+00:00",
+      "next_dagrun_data_interval_start": "2026-06-01T00:00:00+00:00",
+      "owners": [
+        "mle"
+      ],
+      "pickle_id": null,
+      "root_dag_id": null,
+      "schedule_interval": {
+        "__type": "CronExpression",
+        "value": "@monthly"
+      },
+      "scheduler_lock": null,
+      "tags": [
+        {
+          "name": "taxi"
+        },
+        {
+          "name": "spark"
+        },
+        {
+          "name": "volume"
+        }
+      ],
+      "timetable_description": "At 00:00, on day 1 of the month"
+    },
+    {
+      "dag_display_name": "wine_feature_pipeline",
+      "dag_id": "wine_feature_pipeline",
+      "default_view": "grid",
+      "description": "Spark wine ETL \u2192 Parquet feature store \u2192 trigger P1 MLflow train",
+      "file_token": "Ii9vcHQvYWlyZmxvdy9kYWdzL3dpbmVfZmVhdHVyZV9waXBlbGluZV9kYWcucHki.xEjJNSlpdj7T5Knok_oOlK4PRyE",
+      "fileloc": "/opt/airflow/dags/wine_feature_pipeline_dag.py",
+      "has_import_errors": false,
+      "has_task_concurrency_limits": false,
+      "is_active": true,
+      "is_paused": true,
+      "is_subdag": false,
+      "last_expired": null,
+      "last_parsed_time": "2026-07-03T07:05:00.219644+00:00",
+      "last_pickled": null,
+      "max_active_runs": 16,
+      "max_active_tasks": 16,
+      "max_consecutive_failed_dag_runs": 0,
+      "next_dagrun": "2026-06-21T00:00:00+00:00",
+      "next_dagrun_create_after": "2026-06-28T00:00:00+00:00",
+      "next_dagrun_data_interval_end": "2026-06-28T00:00:00+00:00",
+      "next_dagrun_data_interval_start": "2026-06-21T00:00:00+00:00",
+      "owners": [
+        "mle"
+      ],
+      "pickle_id": null,
+      "root_dag_id": null,
+      "schedule_interval": {
+        "__type": "CronExpression",
+        "value": "@weekly"
+      },
+      "scheduler_lock": null,
+      "tags": [
+        {
+          "name": "mlops"
+        },
+        {
+          "name": "spark"
+        },
+        {
+          "name": "project-1"
+        },
+        {
+          "name": "wine"
+        }
+      ],
+      "timetable_description": "At 00:00, only on Sunday"
+    }
+  ],
+  "total_entries": 2
+}

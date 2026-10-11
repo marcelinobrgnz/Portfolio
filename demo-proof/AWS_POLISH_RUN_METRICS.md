@@ -33,32 +33,25 @@
 
 ---
 
-## SageMaker Real-Time Inference — ATTEMPTED (endpoint not InService)
+## SageMaker Real-Time Inference — SUCCESS (2026-07-03)
 
 | Metric | Value |
 |--------|-------|
-| Endpoint name | `wine-quality-demo-ep` |
-| Instance type | ml.t2.medium |
-| Model artifact | `s3://mlops-inference-platform-864981752170/sagemaker/wine-sagemaker-model.tar.gz` |
-| ECR repo | `864981752170.dkr.ecr.eu-west-1.amazonaws.com/portfolio-wine-sagemaker` |
-| sklearn DLC | **Blocked** — account cannot pull `763104351884` SageMaker ECR images |
-| BYOC CreateModel | **Succeeded** (Docker manifest v2 via buildx `oci-mediatypes=false`) |
-| Endpoint status | **Failed** — `CannotStartContainerError` (`docker run <image> serve`) |
-| Root cause | Windows CRLF in shell `entrypoint.sh`; fixed in repo via `wsgi.py` Python entrypoint |
-| Blocker (final push) | Docker Desktop daemon unavailable on capture machine |
+| Endpoint | `wine-quality-demo-ep` |
+| Instance | ml.t2.medium |
+| Image build | **AWS CodeBuild** (no local Docker) |
+| Endpoint status | **InService** |
+| Invoke latency | ~2.3 s (first invoke) |
+| Prediction | `{"predictions": [0]}` |
+| Deploy wall-clock | ~302 s |
+| Proof | `demo-proof/sagemaker/invoke_response.json`, `sagemaker_metrics.json` |
+| Teardown | `teardown_sagemaker_aws.ps1` — complete |
 
-### Proof files
-
-- `demo-proof/sagemaker/endpoint_describe.json`
-- `demo-proof/aws-polish/sagemaker_deploy*.log`
-- `demo-proof/sagemaker/teardown_log.json` (after teardown)
-
-### Re-run when Docker is healthy
+### Re-run
 
 ```powershell
-.\scripts\aws\deploy_sagemaker_demo.ps1
-# capture invoke proof, then:
-.\scripts\aws\teardown_sagemaker.ps1
+.\scripts\aws\deploy_sagemaker_aws.ps1
+.\scripts\aws\teardown_sagemaker_aws.ps1
 ```
 
 ---

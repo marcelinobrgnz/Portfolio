@@ -34,14 +34,14 @@
 | ECR image | `864981752170.dkr.ecr.eu-west-1.amazonaws.com/portfolio-wine-api:latest` |
 | ECS Fargate demo | Completed and torn down (proof in `demo-proof/ecs/`) |
 | EKS demo | Completed and torn down (proof in `demo-proof/eks/`) |
-| SageMaker endpoint | BYOC attempted; endpoint failed (entrypoint fix in repo) — see `AWS_POLISH_RUN_METRICS.md` |
+| SageMaker endpoint | **SUCCESS** (2026-07-03) — CodeBuild BYOC + invoke proof in `demo-proof/sagemaker/` |
 | S3 artifacts | model, data, drift reports |
 
 ### Skipped (budget / local only)
 
 | Item | Status |
 |------|--------|
-| minikube live deploy | EKS used as k8s cloud proof instead |
+| minikube live deploy | Skipped; EKS used as k8s cloud proof |
 | MWAA | ECS Airflow used (~$0.05/hr snap-deploy) |
 
 ---
@@ -72,7 +72,7 @@
 | Airflow UI screenshot | Captured | `demo-proof/project2/03_airflow_login_full.png`, `04_airflow_dags_full.png`, `05_airflow_dag_graph_full.png` |
 | Spark UI screenshot | Captured | `demo-proof/project2/02_spark_master_ui_full.png` |
 | EMR Serverless run | **SUCCESS** (2026-07-02 polish) | `demo-proof/emr-serverless/` — job `00g6tjkq9nrmm80r` |
-| End-to-end DAG manual trigger | Not run | Needs `docker compose up` |
+| End-to-end DAG manual trigger | **AWS ECS** — `wine_feature_pipeline` listed + API proof in `demo-proof/ecs-airflow/dags_list_api.json` |
 
 ---
 
@@ -125,14 +125,9 @@ Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File
 
 ---
 
-## P2 full demo (when Docker is installed)
+## P2 AWS demo (no local Docker)
 
 ```powershell
-# Run as Administrator once:
-C:\Users\Marcelino\AppData\Local\Temp\DockerDesktopInstaller.exe install --quiet --accept-license
-
-cd D:\IIMA\Portfolio\spark-orchestrated-ml-pipeline
-docker compose up --build -d
-# Airflow: http://localhost:8081 (admin/admin)
-# Spark:   http://localhost:8080
+.\scripts\ecs\deploy_airflow_e2e_aws.ps1
+.\scripts\aws\deploy_emr_serverless_demo.ps1
 ```

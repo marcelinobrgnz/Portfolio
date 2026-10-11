@@ -1,0 +1,6 @@
+﻿{
+    "region":  "eu-west-1",
+    "imageUri":  "864981752170.dkr.ecr.eu-west-1.amazonaws.com/portfolio-wine-sagemaker:latest",
+    "endpointName":  "wine-quality-demo-ep",
+    "deployedAtUtc":  "2026-07-03T05:51:22.4590401Z"
+}

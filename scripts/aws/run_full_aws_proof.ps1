@@ -61,7 +61,7 @@ $afUrl/dags/example_bash_operator/grid?tab=graph
 # --- 3. SageMaker ---
 try {
   Write-Host "`n[3/5] SageMaker Real-Time Endpoint" -ForegroundColor Cyan
-  & "$Root\scripts\aws\deploy_sagemaker_demo.ps1"
+  & "$Root\scripts\aws\deploy_sagemaker_aws.ps1"
   Add-Phase "sagemaker" "CAPTURED" "wine-quality-demo-ep"
   & "$Root\scripts\aws\teardown_sagemaker.ps1"
   Add-Phase "sagemaker-teardown" "DONE" ""

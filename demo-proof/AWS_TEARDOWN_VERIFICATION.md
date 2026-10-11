@@ -1,13 +1,13 @@
 ﻿# AWS Teardown Verification
 
-Generated: 2026-07-02T19:14:31.5804409Z UTC
+Generated: 2026-07-03T07:06:26.9324126Z UTC
 
 ## Billable compute (should all be CLEAR)
 
 - [OK] **ECS clusters:** CLEAR - (none)
-- [WARN] **ECR repositories:** FOUND - portfolio-wine-sagemaker
+- [OK] **ECR repositories:** CLEAR - (none)
 - [OK] **CloudWatch /ecs log groups:** CLEAR - (none)
-- [WARN] **Demo security groups:** FOUND - sg-0f419c2bda6f55312
+- [OK] **Demo security groups:** CLEAR - (none)
 - [OK] **SageMaker endpoints:** CLEAR - (none)
 - [OK] **EMR Serverless apps:** CLEAR - (none)
 - [OK] **EKS clusters:** CLEAR - (none)
@@ -15,7 +15,9 @@ Generated: 2026-07-02T19:14:31.5804409Z UTC
 
 ## S3 kept on purpose (storage only, under 2 USD/mo)
 
-PRE data/
+PRE airflow-demo/
+                           PRE codebuild/
+                           PRE data/
                            PRE drift-reports/
                            PRE emr-demo/
                            PRE mlflow-artifacts/
@@ -33,5 +35,5 @@ PRE data/
 | EKS | 0 USD |
 | MWAA | 0 USD |
 
-**Result: 2 resource(s) still present - review above.**
+**Result: No active compute billing from this demo.**
 

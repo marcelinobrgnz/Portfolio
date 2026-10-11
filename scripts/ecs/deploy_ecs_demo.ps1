@@ -73,11 +73,7 @@ if (-not $imageCheck.Ok) {
   Write-Host "Copying image from GHCR to ECR..."
   & $crane copy $GhcrImage $EcrImage 2>&1 | Out-Null
   if ($LASTEXITCODE -ne 0) {
-    Write-Host "crane copy failed - building locally with Docker..."
-    docker build -f "D:\IIMA\Portfolio\mlops-inference-platform\Dockerfile.api" -t $EcrImage "D:\IIMA\Portfolio\mlops-inference-platform"
-    if ($LASTEXITCODE -ne 0) { throw "Failed to build Docker image for ECS" }
-    docker push $EcrImage
-    if ($LASTEXITCODE -ne 0) { throw "Failed to push image to ECR" }
+    throw "crane copy failed. Push image via GitHub Actions (main branch CI) or run: gh auth login; then retry."
   }
 } else {
   Write-Host "ECR image :latest already present, skipping crane copy"

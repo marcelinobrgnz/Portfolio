@@ -1,0 +1,38 @@
+# AWS Teardown Verification
+
+Generated: 2026-07-03T05:53:54.6652778Z UTC
+
+## Billable compute (should all be CLEAR)
+
+- [OK] **ECS clusters:** CLEAR - (none)
+- [OK] **ECR repositories:** CLEAR - (none)
+- [OK] **CloudWatch /ecs log groups:** CLEAR - (none)
+- [OK] **Demo security groups:** CLEAR - (none)
+- [OK] **SageMaker endpoints:** CLEAR - (none)
+- [OK] **EMR Serverless apps:** CLEAR - (none)
+- [OK] **EKS clusters:** CLEAR - (none)
+- [OK] **MWAA environments:** CLEAR - (none)
+
+## S3 kept on purpose (storage only, under 2 USD/mo)
+
+PRE codebuild/
+                           PRE data/
+                           PRE drift-reports/
+                           PRE emr-demo/
+                           PRE mlflow-artifacts/
+                           PRE models/
+                           PRE sagemaker/
+
+## Expected ongoing cost
+
+| Resource | Monthly |
+|----------|---------|
+| S3 artifacts | under 2 USD |
+| ECS / Fargate / ECR | 0 USD |
+| SageMaker endpoints | 0 USD |
+| EMR Serverless | 0 USD |
+| EKS | 0 USD |
+| MWAA | 0 USD |
+
+**Result: No active compute billing from this demo.**
+

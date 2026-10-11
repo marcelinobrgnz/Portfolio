@@ -1,0 +1,124 @@
+﻿[
+    {
+        "phaseType": "SUBMITTED",
+        "phaseStatus": "SUCCEEDED",
+        "startTime": "2026-07-03T11:13:39.082000+05:30",
+        "endTime": "2026-07-03T11:13:39.152000+05:30",
+        "durationInSeconds": 0
+    },
+    {
+        "phaseType": "QUEUED",
+        "phaseStatus": "SUCCEEDED",
+        "startTime": "2026-07-03T11:13:39.152000+05:30",
+        "endTime": "2026-07-03T11:13:39.744000+05:30",
+        "durationInSeconds": 0
+    },
+    {
+        "phaseType": "PROVISIONING",
+        "phaseStatus": "SUCCEEDED",
+        "startTime": "2026-07-03T11:13:39.744000+05:30",
+        "endTime": "2026-07-03T11:13:48.850000+05:30",
+        "durationInSeconds": 9,
+        "contexts": [
+            {
+                "statusCode": "",
+                "message": ""
+            }
+        ]
+    },
+    {
+        "phaseType": "DOWNLOAD_SOURCE",
+        "phaseStatus": "SUCCEEDED",
+        "startTime": "2026-07-03T11:13:48.850000+05:30",
+        "endTime": "2026-07-03T11:13:51.576000+05:30",
+        "durationInSeconds": 2,
+        "contexts": [
+            {
+                "statusCode": "",
+                "message": ""
+            }
+        ]
+    },
+    {
+        "phaseType": "INSTALL",
+        "phaseStatus": "SUCCEEDED",
+        "startTime": "2026-07-03T11:13:51.576000+05:30",
+        "endTime": "2026-07-03T11:13:51.645000+05:30",
+        "durationInSeconds": 0,
+        "contexts": [
+            {
+                "statusCode": "",
+                "message": ""
+            }
+        ]
+    },
+    {
+        "phaseType": "PRE_BUILD",
+        "phaseStatus": "SUCCEEDED",
+        "startTime": "2026-07-03T11:13:51.645000+05:30",
+        "endTime": "2026-07-03T11:14:19.255000+05:30",
+        "durationInSeconds": 27,
+        "contexts": [
+            {
+                "statusCode": "",
+                "message": ""
+            }
+        ]
+    },
+    {
+        "phaseType": "BUILD",
+        "phaseStatus": "FAILED",
+        "startTime": "2026-07-03T11:14:19.255000+05:30",
+        "endTime": "2026-07-03T11:14:19.489000+05:30",
+        "durationInSeconds": 0,
+        "contexts": [
+            {
+                "statusCode": "COMMAND_EXECUTION_ERROR",
+                "message": "Error while executing command: docker build -f scripts/sagemaker/Dockerfile.sagemaker -t $IMAGE_REPO_NAME:$IMAGE_TAG .. Reason: exit status 1"
+            }
+        ]
+    },
+    {
+        "phaseType": "POST_BUILD",
+        "phaseStatus": "FAILED",
+        "startTime": "2026-07-03T11:14:19.489000+05:30",
+        "endTime": "2026-07-03T11:14:19.547000+05:30",
+        "durationInSeconds": 0,
+        "contexts": [
+            {
+                "statusCode": "COMMAND_EXECUTION_ERROR",
+                "message": "Error while executing command: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG. Reason: exit status 1"
+            }
+        ]
+    },
+    {
+        "phaseType": "UPLOAD_ARTIFACTS",
+        "phaseStatus": "SUCCEEDED",
+        "startTime": "2026-07-03T11:14:19.547000+05:30",
+        "endTime": "2026-07-03T11:14:19.639000+05:30",
+        "durationInSeconds": 0,
+        "contexts": [
+            {
+                "statusCode": "",
+                "message": ""
+            }
+        ]
+    },
+    {
+        "phaseType": "FINALIZING",
+        "phaseStatus": "SUCCEEDED",
+        "startTime": "2026-07-03T11:14:19.639000+05:30",
+        "endTime": "2026-07-03T11:14:19.948000+05:30",
+        "durationInSeconds": 0,
+        "contexts": [
+            {
+                "statusCode": "",
+                "message": ""
+            }
+        ]
+    },
+    {
+        "phaseType": "COMPLETED",
+        "startTime": "2026-07-03T11:14:19.948000+05:30"
+    }
+]

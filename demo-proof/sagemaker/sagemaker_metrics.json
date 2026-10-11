@@ -1,0 +1,14 @@
+{
+  "service": "SageMaker Real-Time Inference",
+  "region": "eu-west-1",
+  "endpointName": "wine-quality-demo-ep",
+  "instanceType": "ml.t2.medium",
+  "imageUri": "864981752170.dkr.ecr.eu-west-1.amazonaws.com/portfolio-wine-sagemaker:latest",
+  "buildMethod": "AWS CodeBuild",
+  "buildId": "portfolio-sagemaker-build:e626f2ea-d6c9-4d08-bf7a-00b2b2da082d",
+  "endpointStatus": "InService",
+  "deployDurationSec": 301.8,
+  "invokeLatencyMs": 2255,
+  "prediction": {"predictions": [0]},
+  "capturedAtUtc": "2026-07-03T05:50:00Z"
+}

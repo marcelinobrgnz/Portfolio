@@ -12,7 +12,7 @@
 | Tests | pytest (health, schema, prediction shape) |
 | CI/CD | GitHub Actions (pytest on PR; GHCR push on `main`) |
 | Monitoring | Evidently data-drift HTML reports → `reports/` or S3 |
-| Orchestration | docker-compose (API + MLflow), optional minikube |
+| Orchestration | Local: `uvicorn` + MLflow SQLite; cloud: ECS / EKS / SageMaker (AWS scripts) |
 | Cloud | AWS `eu-west-1` (Ireland) — S3 for artifacts & drift reports |
 
 ## Why Wine Quality?
@@ -38,9 +38,8 @@ mlops-inference-platform/
 │   ├── train.sh
 │   ├── run_drift.sh
 │   └── setup_s3.sh        # create S3 prefixes in eu-west-1
-├── k8s/deployment.yaml     # minikube Deployment + NodePort
-├── Dockerfile              # multi-stage: trainer | api
-├── docker-compose.yml      # MLflow + API locally
+├── k8s/deployment.yaml     # EKS / k8s Deployment + NodePort
+├── Dockerfile              # multi-stage: trainer | api (built in GitHub Actions / AWS)
 └── .github/workflows/ci.yml
 ```
 
@@ -69,11 +68,12 @@ set MLFLOW_TRACKING_URI=sqlite:///mlflow.db
 python -m src.train
 ```
 
-**With MLflow UI (docker-compose):**
+**With MLflow UI (local file tracking):**
 
 ```bash
-docker compose up -d mlflow
-bash scripts/train.sh
+set MLFLOW_TRACKING_URI=sqlite:///mlflow.db
+python -m src.train
+# Optional: mlflow ui --backend-store-uri sqlite:///mlflow.db
 # Open http://localhost:5000
 ```
 
@@ -92,23 +92,13 @@ curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -
 
 Interactive docs: http://localhost:8000/docs
 
-### 4. Docker (full stack)
-
-```bash
-python -m src.train   # ensure models/ is populated first
-docker compose up --build
-```
-
-- API: http://localhost:8000  
-- MLflow: http://localhost:5000  
-
-### 5. Tests
+### 4. Tests
 
 ```bash
 pytest tests/ -v
 ```
 
-### 6. Drift monitoring
+### 5. Drift monitoring
 
 ```bash
 python -m monitoring.drift
@@ -142,20 +132,17 @@ mlflow server \
   --default-artifact-root s3://mlops-inference-platform-864981752170/mlflow-artifacts
 ```
 
-Estimated cost: **<$1/month** for S3 storage at demo scale; GHCR + GitHub Actions + local Docker/minikube are **$0**.
+Estimated cost: **<$1/month** for S3 storage at demo scale; GHCR + GitHub Actions builds are **$0** (cloud CI, no local Docker).
 
-## Kubernetes (minikube)
+## Kubernetes (AWS EKS)
 
-```bash
-minikube start
-python -m src.train
-minikube cp models /models
-kubectl apply -f k8s/deployment.yaml
-minikube service wine-quality-api --url
-# or NodePort 30080
+```powershell
+.\scripts\aws\deploy_eks_demo.ps1
+# Proof in demo-proof/eks/; then:
+.\scripts\aws\teardown_eks_demo.ps1
 ```
 
-Update the image in `k8s/deployment.yaml` after your first GHCR push.
+Manifests in `k8s/deployment.yaml` — image from GHCR after CI push.
 
 ## CI/CD
 

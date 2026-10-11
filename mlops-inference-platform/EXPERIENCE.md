@@ -82,7 +82,7 @@ End-to-end MLOps platform: XGBoost training with MLflow tracking, FastAPI infere
 2. `uvicorn src.serve.main:app` → `/docs` → live predict.  
 3. `python scripts/benchmark_api.py` → latency numbers.  
 4. `python -m monitoring.drift` → open HTML report.  
-5. `docker compose up` → full stack.
+5. `uvicorn` + MLflow SQLite → local API; AWS scripts for cloud demos.
 
 ---
 

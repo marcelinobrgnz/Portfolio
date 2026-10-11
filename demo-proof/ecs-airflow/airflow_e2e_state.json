@@ -1,0 +1,5 @@
+﻿{
+    "capturedAtUtc":  "2026-07-03T07:05:45.6684849Z",
+    "airflowUrl":  "http://34.242.227.144:8080",
+    "taskArn":  "arn:aws:ecs:eu-west-1:864981752170:task/airflow-e2e-demo-cluster/2061d6554a38477aa04e89f8691bf653"
+}
