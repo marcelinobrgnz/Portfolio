@@ -5,6 +5,7 @@ on:
     branches: [main, master]
   push:
     branches: [main, master]
+  workflow_dispatch:
 
 jobs:
   p1-test:
@@ -28,7 +29,8 @@ jobs:
   p1-publish:
     runs-on: ubuntu-latest
     needs: p1-test
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    # Manual only — avoids failure emails on every push; tests (p1/p2) still run on each push.
+    if: github.event_name == 'workflow_dispatch'
     defaults:
       run:
         working-directory: mlops-inference-platform
