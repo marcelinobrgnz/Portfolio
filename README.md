@@ -1,14 +1,18 @@
-# Portfolio — MLE Projects
+# Portfolio — MLE & Data Projects
 
 **Marcelino Braganza** · [braganzamarcelino@gmail.com](mailto:braganzamarcelino@gmail.com)
 
-End-to-end machine learning engineering portfolio: inference platform, batch orchestration, and enterprise RAG on AWS.
+End-to-end portfolio: **MLOps serving**, **Spark/Airflow batch**, **enterprise RAG**, **SageMaker recommender**, and **analytics engineering (CFPB)** on AWS and modern data stack.
 
 | # | Project | Tagline | Folder |
 |---|---------|---------|--------|
 | 1 | **MLOps Inference Platform** | Train → track → serve → test → monitor | [`mlops-inference-platform/`](./mlops-inference-platform/) |
 | 2 | **Spark-Orchestrated ML Pipeline** | Batch data → Spark → Airflow → retrain | [`spark-orchestrated-ml-pipeline/`](./spark-orchestrated-ml-pipeline/) |
 | 3 | **SecureGuard RAG** | Bedrock RAG + guardrails + Streamlit + Lambda API | [`secureguard-rag/`](./secureguard-rag/) |
+| 4 | **AWS Product Recommendation Pipeline** | Glue/Parquet ETL → SageMaker XGBoost → Lambda API | [`aws-product-recommendation-pipeline/`](./aws-product-recommendation-pipeline/) |
+| 5 | **CFPB Data Platform** | Parquet → Snowflake → dbt → Airflow → Databricks Delta (18.1M rows) | [`cfpb-data-platform/`](./cfpb-data-platform/) |
+
+**GitHub:** [marcelinobrgnz/Portfolio](https://github.com/marcelinobrgnz/Portfolio) — all five projects live in this monorepo.
 
 ## Engineering metrics (measured)
 
@@ -33,6 +37,13 @@ cd spark-orchestrated-ml-pipeline && pip install -r requirements-dev.txt && pyte
 
 # Project 3 (AWS account required; copy config.env.example → config.env)
 cd secureguard-rag && pip install -r requirements.txt && python scripts/step01_verify_aws.py
+
+# Project 4
+cd aws-product-recommendation-pipeline && pip install pandas pyarrow scikit-learn xgboost
+
+# Project 5
+cd cfpb-data-platform && pip install -r requirements.txt
+# See cfpb-data-platform/docs/RUNBOOK.md
 ```
 
 ## License

@@ -1,0 +1,9 @@
+-- OPTIONAL: S3 external stage (only if S3_BUCKET set and IAM ready).
+-- Prefer internal stage on trial day to avoid IAM cost/complexity.
+
+/*
+CREATE OR REPLACE STAGE CFPB_DB.RAW.STG_COMPLAINTS_S3
+  URL = 's3://YOUR_BUCKET/cfpb/parquet/complaints/'
+  CREDENTIALS = (AWS_KEY_ID = '...' AWS_SECRET_KEY = '...')  -- prefer storage integration in real life
+  FILE_FORMAT = CFPB_DB.RAW.FF_PARQUET;
+*/

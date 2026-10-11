@@ -1,0 +1,10 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+raw_review_*/
+raw_meta_*/
+timestamp_*/
+*.parquet
+data/

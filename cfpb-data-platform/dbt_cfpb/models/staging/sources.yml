@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: cfpb_raw
+    description: Snowflake RAW landing from CFPB Parquet COPY INTO
+    database: CFPB_DB
+    schema: RAW
+    tables:
+      - name: v_complaints
+        description: Typed view over COMPLAINTS_RAW VARIANT landing
+        identifier: V_COMPLAINTS
+        columns:
+          - name: complaint_id
+            description: CFPB Complaint ID
+            tests:
+              - not_null
+              - unique
+          - name: date_received
+            tests:
+              - not_null
+          - name: product
+            description: May be blank in rare source rows; cleaned in staging
+          - name: company
+            description: May be blank in rare source rows; cleaned in staging
+        freshness:
+          warn_after: {count: 30, period: day}
+          error_after: {count: 90, period: day}
+        loaded_at_field: loaded_at

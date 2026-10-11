@@ -1,0 +1,31 @@
+{
+    "widgets": [
+      {
+        "type": "metric",
+        "properties": {
+          "metrics": [
+            ["AWS/SageMaker", "Invocations", "EndpointName", "recommendation-endpoint-v1"],
+            [".", "ModelLatency", ".", "."],
+            [".", "4XXError", ".", "."],
+            [".", "5XXError", ".", "."]
+          ],
+          "period": 300,
+          "stat": "Average",
+          "region": "eu-west-1",
+          "title": "SageMaker Endpoint Metrics"
+        }
+      },
+      {
+        "type": "metric",
+        "properties": {
+          "metrics": [
+            ["AWS/Glue", "glue.driver.ExecutorAllocationManager.executors.numberAllExecutors", "JobName", "process-events"],
+            [".", "glue.ALL.s3.filesystem.read_bytes", ".", "."]
+          ],
+          "period": 300,
+          "stat": "Average",
+          "title": "Glue Job Metrics"
+        }
+      }
+    ]
+  }

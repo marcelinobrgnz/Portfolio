@@ -1,0 +1,16 @@
+# Copy to profiles.yml (gitignored). Fill Snowflake trial values.
+
+cfpb_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE') | default('ACCOUNTADMIN') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') | default('CFPB_WH') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE') | default('CFPB_DB') }}"
+      schema: ANALYTICS
+      threads: 4
+      client_session_keep_alive: False

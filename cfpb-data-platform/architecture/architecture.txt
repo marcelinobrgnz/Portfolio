@@ -1,0 +1,34 @@
+# CFPB Data Platform — architecture
+
+```text
+CFPB CSV (public)
+        |
+        v
+ Python ingest (chunked) -----> local Parquet year=/month=
+        |                              |
+        |                              +--> S3 (eu-west-1)
+        |                                      |
+        |                                      v
+        |                         Snowflake EXTERNAL STAGE
+        |                                      |
+        |                                      v
+        |                         RAW.COMPLAINTS_RAW (VARIANT)
+        |                                      |
+        |                                      v
+        |                         RAW.V_COMPLAINTS (typed view)
+        |                                      |
+        |                                      v
+        |                              dbt build
+        |                         staging + marts + incremental
+        |                                      |
+        +---------------- Airflow DAG ---------+
+                          (fail on red tests)
+
+ Same Parquet ----> Databricks UC Volume
+                           |
+                           v
+                  Delta complaints_delta
+                  + product/month mart
+```
+
+Generate PNG later with draw.io / mermaid CLI if desired.

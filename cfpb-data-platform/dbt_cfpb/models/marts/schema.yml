@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: fct_complaints_by_product_month
+    description: Monthly complaint volumes by product
+    columns:
+      - name: month_start
+        tests: [not_null]
+      - name: product
+        tests: [not_null]
+      - name: complaint_count
+        tests: [not_null]
+
+  - name: fct_complaints_by_company_product
+    description: Company × product complaint aggregates
+    columns:
+      - name: company
+        tests: [not_null]
+      - name: product
+        tests: [not_null]
+      - name: complaint_count
+        tests: [not_null]
+
+  - name: fct_complaints_incremental
+    description: Incremental complaint grain fact (merge on complaint_id)
+    columns:
+      - name: complaint_id
+        tests: [not_null, unique]
+      - name: date_received
+        tests: [not_null]

@@ -1,0 +1,11 @@
+{
+  "dataset": "cfpb_complaints",
+  "mode": "full",
+  "local_parquet_rows": 18091520,
+  "rules": [
+    "local_parquet_rows must equal Snowflake COMPLAINTS_RAW after COPY",
+    "complaint_id should be unique in typed view (check in Snowflake)",
+    "dbt build must be green before claiming skills"
+  ],
+  "status": "LOCAL_ONLY"
+}

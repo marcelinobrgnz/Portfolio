@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: stg_complaints
+    description: Cleaned typed complaints from RAW.V_COMPLAINTS
+    columns:
+      - name: complaint_id
+        tests: [not_null, unique]
+      - name: date_received
+        tests: [not_null]
+      - name: product
+        description: Blank source values become null via nullif
+        tests:
+          - accepted_values:
+              values:
+                [
+                  "Credit reporting, credit repair services, or other personal consumer reports",
+                  "Credit card or prepaid card",
+                  "Debt collection",
+                  "Checking or savings account",
+                  "Mortgage",
+                  "Vehicle loan or lease",
+                  "Student loan",
+                  "Money transfer, virtual currency, or money service",
+                  "Payday loan, title loan, personal loan, or advance",
+                  "Credit reporting",
+                  "Credit card",
+                  "Bank account or service",
+                  "Consumer Loan",
+                  "Prepaid card",
+                  "Other financial service",
+                  "Payday loan",
+                  "Money transfers",
+                  "Virtual currency",
+                ]
+              config:
+                severity: warn
+      - name: company
+        description: Blank source values become null via nullif

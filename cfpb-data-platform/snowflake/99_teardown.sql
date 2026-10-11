@@ -1,0 +1,10 @@
+-- 99_teardown.sql — run AFTER screenshots. Protects trial credits.
+
+USE ROLE ACCOUNTADMIN;
+
+DROP DATABASE IF EXISTS CFPB_DB;
+DROP WAREHOUSE IF EXISTS CFPB_WH;
+
+-- Confirm
+-- SHOW DATABASES LIKE 'CFPB%';
+-- SHOW WAREHOUSES LIKE 'CFPB%';
