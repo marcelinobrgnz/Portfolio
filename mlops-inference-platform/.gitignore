@@ -17,10 +17,13 @@ mlflow.db
 mlruns/
 mlartifacts/
 
-# Data (download via scripts)
+# Data (wine CSVs committed for CI; other data optional)
 data/*.csv
+!data/winequality-red.csv
+!data/winequality-white.csv
 data/*.parquet
 !data/.gitkeep
+.venv-ci-test/
 
 # Reports
 reports/*.html
